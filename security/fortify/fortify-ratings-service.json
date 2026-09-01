@@ -232,7 +232,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/integration/WarehouseClient.java",
-        "lineNumber": 26
+        "lineNumber": 27
       },
       "abstract": "A service account password is compiled into the artifact.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -250,7 +250,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/integration/WarehouseClient.java",
-        "lineNumber": 27
+        "lineNumber": 28
       },
       "abstract": "A live warehouse API token is compiled into the artifact.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -628,7 +628,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/config/AdminApiFilter.java",
-        "lineNumber": 38
+        "lineNumber": 43
       },
       "abstract": "The filter evaluates the admin condition and then forwards every request regardless.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -654,7 +654,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "F253A18D6A1A3425",
+      "issueInstanceId": "9DE75B0E48D457EC",
       "category": "Log Forging",
       "kingdom": "Input Validation and Representation",
       "friority": "Medium",
@@ -664,7 +664,7 @@
       "impact": 2.5,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/config/AdminApiFilter.java",
-        "lineNumber": 37
+        "lineNumber": 38
       },
       "abstract": "The X-Forwarded-User header is written to the log without neutralising newlines.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -690,7 +690,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "11C5E9E555CFA5E3",
+      "issueInstanceId": "64A4DC3832EA28CF",
       "category": "Log Forging",
       "kingdom": "Input Validation and Representation",
       "friority": "Low",
@@ -700,7 +700,7 @@
       "impact": 2.5,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/integration/WarehouseClient.java",
-        "lineNumber": 44
+        "lineNumber": 51
       },
       "abstract": "The issuerId value is written to the log unneutralised.",
       "scanDate": "2026-02-17T02:14:38Z",

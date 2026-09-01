@@ -162,11 +162,11 @@ FORTIFY_ISSUES = [
      "A grade override endpoint relies entirely on the filter for authorization."),
 
     # Log forging.
-    (ADMIN_FILTER, "LOG.info(\"admin check user=\"", 1, "Log Forging", 117, "Medium",
+    (ADMIN_FILTER, "LOG.info(\"admin check user={}", 1, "Log Forging", 117, "Medium",
      "The X-Forwarded-User header is written to the log without neutralising newlines."),
     (RATINGS_CTRL, "LOG.info(\"rating lookup issuer=\"", 1, "Log Forging", 117, "Medium",
      "The issuerId and requestedBy values are written to the log unneutralised."),
-    (WAREHOUSE, "LOG.warn(\"warehouse lookup failed for \"", 1, "Log Forging", 117, "Low",
+    (WAREHOUSE, "LOG.warn(\"warehouse lookup failed for {}", 1, "Log Forging", 117, "Low",
      "The issuerId value is written to the log unneutralised."),
 
     # The second cluster the triage step is expected to decline.

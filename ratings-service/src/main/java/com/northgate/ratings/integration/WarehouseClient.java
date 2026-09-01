@@ -1,6 +1,7 @@
 package com.northgate.ratings.integration;
 
 import java.nio.charset.StandardCharsets;
+import java.util.regex.Pattern;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -26,6 +27,8 @@ public class WarehouseClient {
     private static final String WAREHOUSE_PASSWORD = "Wareh0use-2019!";
     private static final String WAREHOUSE_API_TOKEN = "ngw_live_8f3c21bb94d24e7ba0c15ee7d3f10a92";
 
+    private static final Pattern ISSUER_ID = Pattern.compile("[A-Za-z0-9-]{1,32}");
+
     private final String baseUrl;
 
     public WarehouseClient(@Value("${northgate.warehouse.base-url:http://10.42.8.15:8081}") String baseUrl) {
@@ -33,6 +36,10 @@ public class WarehouseClient {
     }
 
     public String fetchIssuerDossier(String issuerId) {
+        if (issuerId == null || !ISSUER_ID.matcher(issuerId).matches()) {
+            LOG.warn("warehouse lookup rejected: malformed issuer id");
+            return null;
+        }
         try (CloseableHttpClient client = HttpClients.createDefault()) {
             HttpGet get = new HttpGet(baseUrl + "/warehouse/issuers/" + issuerId);
             get.addHeader("Authorization", "Basic " + basicAuth());
@@ -41,7 +48,7 @@ public class WarehouseClient {
                 return EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
             }
         } catch (Exception e) {
-            LOG.warn("warehouse lookup failed for " + issuerId + ": " + e.getMessage());
+            LOG.warn("warehouse lookup failed for {}: {}", issuerId, e.getMessage());
             return null;
         }
     }
