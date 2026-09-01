@@ -1,78 +1,69 @@
 package com.northgate.ratings.crypto;
 
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Random;
+import java.security.SecureRandom;
 
-import javax.crypto.Cipher;
-import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.DESKeySpec;
+import javax.crypto.spec.PBEKeySpec;
 
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
 
 /**
- * Hashing and field encryption as the 2019 service did it. The desktop client and the
- * overnight batch both depend on these formats.
+ * Password hashing and session identifier generation for the desk console.
+ *
+ * Stored hashes have the form {@code <iterations>$<salt-hex>$<hash-hex>} and are produced
+ * by {@link #hashPassword(String)}; {@link #verifyPassword(String, String)} checks a
+ * submitted password against one in constant time.
  */
 public final class LegacyDigest {
 
-    private static final String FIELD_KEY = "n0rthg8t";
+    private static final String KDF = "PBKDF2WithHmacSHA256";
+    private static final int ITERATIONS = 120_000;
+    private static final int SALT_BYTES = 16;
+    private static final int KEY_BITS = 256;
 
-    private static final Random SESSION_RANDOM = new Random();
+    private static final SecureRandom RANDOM = new SecureRandom();
 
     private LegacyDigest() {
     }
 
-    public static String hashPassword(String password, String salt) {
-        try {
-            MessageDigest md5 = MessageDigest.getInstance("MD5");
-            md5.update(salt.getBytes("UTF-8"));
-            return Hex.encodeHexString(md5.digest(password.getBytes("UTF-8")));
-        } catch (Exception e) {
-            throw new IllegalStateException("hash failed", e);
-        }
+    public static String hashPassword(String password) {
+        byte[] salt = new byte[SALT_BYTES];
+        RANDOM.nextBytes(salt);
+        return ITERATIONS + "$" + Hex.encodeHexString(salt) + "$"
+                + Hex.encodeHexString(derive(password, salt, ITERATIONS));
     }
 
-    public static String fingerprint(String value) {
-        try {
-            MessageDigest md5 = MessageDigest.getInstance("MD5");
-            return Hex.encodeHexString(md5.digest(value.getBytes("UTF-8")));
-        } catch (Exception e) {
-            throw new IllegalStateException("fingerprint failed", e);
+    public static boolean verifyPassword(String password, String stored) {
+        if (password == null || stored == null || stored.isEmpty()) {
+            return false;
         }
-    }
-
-    public static String encryptField(String plaintext) {
-        try {
-            Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5Padding");
-            cipher.init(Cipher.ENCRYPT_MODE, desKey());
-            return new String(Base64.encodeBase64(cipher.doFinal(plaintext.getBytes("UTF-8"))), "UTF-8");
-        } catch (Exception e) {
-            throw new IllegalStateException("encrypt failed", e);
+        String[] parts = stored.split("\\$");
+        if (parts.length != 3) {
+            return false;
         }
-    }
-
-    public static String decryptField(String ciphertext) {
         try {
-            Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5Padding");
-            cipher.init(Cipher.DECRYPT_MODE, desKey());
-            return new String(cipher.doFinal(Base64.decodeBase64(ciphertext)), "UTF-8");
+            int iterations = Integer.parseInt(parts[0]);
+            byte[] salt = Hex.decodeHex(parts[1].toCharArray());
+            byte[] expected = Hex.decodeHex(parts[2].toCharArray());
+            return MessageDigest.isEqual(expected, derive(password, salt, iterations));
         } catch (Exception e) {
-            throw new IllegalStateException("decrypt failed", e);
+            return false;
         }
     }
 
     public static String newSessionId() {
-        return Long.toHexString(SESSION_RANDOM.nextLong());
+        byte[] id = new byte[16];
+        RANDOM.nextBytes(id);
+        return Hex.encodeHexString(id);
     }
 
-    private static SecretKey desKey() throws NoSuchAlgorithmException {
+    private static byte[] derive(String password, byte[] salt, int iterations) {
         try {
-            return SecretKeyFactory.getInstance("DES").generateSecret(new DESKeySpec(FIELD_KEY.getBytes("UTF-8")));
+            PBEKeySpec spec = new PBEKeySpec(password.toCharArray(), salt, iterations, KEY_BITS);
+            return SecretKeyFactory.getInstance(KDF).generateSecret(spec).getEncoded();
         } catch (Exception e) {
-            throw new IllegalStateException("key derivation failed", e);
+            throw new IllegalStateException("hash failed", e);
         }
     }
 }

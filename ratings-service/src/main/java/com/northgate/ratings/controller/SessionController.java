@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.northgate.ratings.crypto.LegacyDigest;
 import com.northgate.ratings.security.SessionCookieCodec;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,12 +21,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/session")
 public class SessionController {
 
-    private static final String OPS_CONSOLE_PASSWORD_HASH = "9f5c9912e7cbc0a4e2a0a2d1b8b2d2b2";
-
     private final SessionCookieCodec codec;
+    private final String opsConsolePasswordHash;
 
-    public SessionController(SessionCookieCodec codec) {
+    public SessionController(SessionCookieCodec codec,
+                             @Value("${northgate.ops-console.password-hash:}") String opsConsolePasswordHash) {
         this.codec = codec;
+        this.opsConsolePasswordHash = opsConsolePasswordHash;
     }
 
     @PostMapping("/login")
@@ -33,13 +35,14 @@ public class SessionController {
                                                      @RequestParam("password") String password,
                                                      @RequestParam(value = "desk", defaultValue = "credit") String desk,
                                                      HttpServletResponse response) {
-        String hash = LegacyDigest.hashPassword(password, user);
-        boolean admin = OPS_CONSOLE_PASSWORD_HASH.equals(hash);
+        boolean admin = LegacyDigest.verifyPassword(password, opsConsolePasswordHash);
 
         SessionCookieCodec.SessionState state = new SessionCookieCodec.SessionState(user, desk, admin);
         Cookie cookie = new Cookie(SessionCookieCodec.COOKIE_NAME, codec.encode(state));
         cookie.setPath("/");
         cookie.setMaxAge(60 * 60 * 12);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true);
         response.addCookie(cookie);
 
         Map<String, Object> body = new LinkedHashMap<>();
