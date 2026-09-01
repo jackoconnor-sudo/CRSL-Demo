@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import org.apache.logging.log4j.LogManager;
@@ -35,6 +36,10 @@ public class AdminApiFilter implements Filter {
         String caller = http.getHeader("X-Forwarded-User");
         boolean admin = "true".equalsIgnoreCase(http.getHeader(ADMIN_HEADER));
         LOG.info("admin check user=" + caller + " path=" + http.getRequestURI() + " admin=" + admin);
+        if (!admin) {
+            ((HttpServletResponse) response).sendError(HttpServletResponse.SC_FORBIDDEN);
+            return;
+        }
         chain.doFilter(request, response);
     }
 
