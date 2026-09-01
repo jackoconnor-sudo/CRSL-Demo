@@ -4,14 +4,15 @@ Playbooks and a scan profile for working this repository with Devin.
 
 ## Playbooks
 
-Create these three in the app, then keep the prompts short — the playbook carries the
-procedure, so the prompt only has to name the finding or work item.
+These three exist in the Devin org already; the ids below are what the gate fan-out
+workflow dispatches against. Keep the prompts short — the playbook carries the procedure,
+so the prompt only has to name the finding or work item.
 
-| File | Playbook | Used for |
-| ---- | -------- | -------- |
-| `playbooks/triage-scanner-backlog.md` | `triage-scanner-backlog` | Turning `security/` into a plan. Produces no code. |
-| `playbooks/finding-to-merged-pr.md` | `finding-to-merged-pr` | One finding, one pull request. Also what the gate fan-out workflow runs. |
-| `playbooks/work-item-to-change.md` | `work-item-to-change` | Brownfield delivery from `ado/work-items.csv`. |
+| File | Playbook id | Used for |
+| ---- | ----------- | -------- |
+| `playbooks/triage-scanner-backlog.md` | `playbook-9195ac0b2d8d4c90adef56ae0c2ce869` | Turning `security/` into a plan. Produces no code. |
+| `playbooks/finding-to-merged-pr.md` | `playbook-cdfac1c9b10a448097c3d379f5b72f75` | One finding, one pull request. Also what the gate fan-out workflow runs. |
+| `playbooks/work-item-to-change.md` | `playbook-9421c5812dc3422ab75aeca9cda3183f` | Brownfield delivery from `ado/work-items.csv`. |
 
 Each playbook that changes code requires a verification pass against the running service
 with a screen recording attached to the pull request. Keep that step: the argument this

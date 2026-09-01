@@ -16,7 +16,7 @@ variables:
   MAVEN_CACHE_FOLDER: $(Pipeline.Workspace)/.m2/repository
   MAVEN_OPTS: "-Dmaven.repo.local=$(MAVEN_CACHE_FOLDER)"
   DEVIN_DISPATCH_LIVE: "false"
-  DEVIN_PLAYBOOK_ID: "finding-to-merged-pr"
+  DEVIN_PLAYBOOK_ID: "playbook-cdfac1c9b10a448097c3d379f5b72f75"
 
 stages:
   - stage: build
@@ -99,7 +99,7 @@ stages:
               report = json.load(open(sys.argv[1]))
               live = os.environ.get("DEVIN_DISPATCH_LIVE", "false").lower() == "true"
               api_key = os.environ.get("DEVIN_API_KEY", "")
-              playbook = os.environ.get("DEVIN_PLAYBOOK_ID", "finding-to-merged-pr")
+              playbook = os.environ.get("DEVIN_PLAYBOOK_ID", "playbook-cdfac1c9b10a448097c3d379f5b72f75")
               repo = os.environ.get("BUILD_REPOSITORY_NAME", "northgate-ratings-platform")
 
               for condition in report["conditions"]:

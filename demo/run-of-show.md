@@ -16,7 +16,8 @@ to close the demo pull requests, delete their branches, and put `main` back on t
 
 - [ ] Repository connected to the Devin org, and indexed in DeepWiki. Indexing is not
       instant; do it the day before.
-- [ ] Three playbooks created from `.devin/playbooks/`.
+- [ ] Three playbooks created from `.devin/playbooks/` (already done; ids in
+      `.devin/README.md`).
 - [ ] Two sessions **pre-run and left open in tabs**: the triage session and one
       remediation session that has already produced a pull request. Live sessions are the
       demo, but a ten minute slot cannot absorb a cold start.

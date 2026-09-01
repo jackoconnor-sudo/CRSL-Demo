@@ -44,7 +44,7 @@ jobs:
 
           report = json.load(open("gate.json"))
           repo = os.environ["GITHUB_REPOSITORY"]
-          playbook = os.environ.get("DEVIN_PLAYBOOK_ID", "finding-to-merged-pr")
+          playbook = os.environ.get("DEVIN_PLAYBOOK_ID", "playbook-cdfac1c9b10a448097c3d379f5b72f75")
 
           sessions = []
           for condition in report["conditions"]:
