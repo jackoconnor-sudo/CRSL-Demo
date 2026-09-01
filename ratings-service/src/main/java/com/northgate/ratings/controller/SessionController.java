@@ -55,11 +55,18 @@ public class SessionController {
     @GetMapping("/whoami")
     public Map<String, Object> whoami(@CookieValue(value = SessionCookieCodec.COOKIE_NAME, required = false) String cookie) {
         Map<String, Object> body = new LinkedHashMap<>();
-        if (cookie == null) {
+        SessionCookieCodec.SessionState state = null;
+        if (cookie != null) {
+            try {
+                state = codec.decode(cookie);
+            } catch (IllegalStateException e) {
+                state = null;
+            }
+        }
+        if (state == null) {
             body.put("user", null);
             return body;
         }
-        SessionCookieCodec.SessionState state = codec.decode(cookie);
         body.put("user", state.getUser());
         body.put("desk", state.getDesk());
         body.put("admin", state.isAdmin());

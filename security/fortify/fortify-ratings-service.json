@@ -358,7 +358,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/crypto/LegacyDigest.java",
-        "lineNumber": 32
+        "lineNumber": 34
       },
       "abstract": "Passwords are hashed with MD5 and an unsalted single pass.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -376,7 +376,7 @@
       "impact": 2.5,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/crypto/LegacyDigest.java",
-        "lineNumber": 49
+        "lineNumber": 54
       },
       "abstract": "Values are fingerprinted with MD5.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -412,7 +412,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/crypto/LegacyDigest.java",
-        "lineNumber": 61
+        "lineNumber": 66
       },
       "abstract": "Field encryption uses DES in ECB mode.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -430,7 +430,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/crypto/LegacyDigest.java",
-        "lineNumber": 63
+        "lineNumber": 68
       },
       "abstract": "Field decryption uses DES in ECB mode.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -448,7 +448,7 @@
       "impact": 2.5,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/crypto/LegacyDigest.java",
-        "lineNumber": 64
+        "lineNumber": 69
       },
       "abstract": "A 56 bit DES key is derived from a string constant.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -610,7 +610,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/controller/SessionController.java",
-        "lineNumber": 62
+        "lineNumber": 61
       },
       "abstract": "The whoami endpoint deserializes the session cookie on an unauthenticated path.",
       "scanDate": "2026-02-17T02:14:38Z",

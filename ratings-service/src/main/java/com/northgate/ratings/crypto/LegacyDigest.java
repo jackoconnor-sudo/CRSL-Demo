@@ -19,6 +19,8 @@ public final class LegacyDigest {
 
     private static final String KDF = "PBKDF2WithHmacSHA256";
     private static final int ITERATIONS = 120_000;
+    private static final int MAX_ITERATIONS = 1_000_000;
+    private static final int MAX_FIELD_HEX = 128;
     private static final int SALT_BYTES = 16;
     private static final int KEY_BITS = 256;
 
@@ -39,11 +41,14 @@ public final class LegacyDigest {
             return false;
         }
         String[] parts = stored.split("\\$");
-        if (parts.length != 3) {
+        if (parts.length != 3 || parts[1].length() > MAX_FIELD_HEX || parts[2].length() > MAX_FIELD_HEX) {
             return false;
         }
         try {
             int iterations = Integer.parseInt(parts[0]);
+            if (iterations < 1 || iterations > MAX_ITERATIONS) {
+                return false;
+            }
             byte[] salt = Hex.decodeHex(parts[1].toCharArray());
             byte[] expected = Hex.decodeHex(parts[2].toCharArray());
             return MessageDigest.isEqual(expected, derive(password, salt, iterations));

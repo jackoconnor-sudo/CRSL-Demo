@@ -102,6 +102,13 @@ class SecurityRemediationTest {
     }
 
     @Test
+    void malformedSessionCookieIsTreatedAsAnonymous() throws Exception {
+        mvc.perform(get("/api/session/whoami").cookie(new Cookie(SessionCookieCodec.COOKIE_NAME, "rO0ABXNy")))
+                .andExpect(status().isOk())
+                .andExpect(content().json("{\"user\":null}"));
+    }
+
+    @Test
     void passwordHashIsSaltedAndVerifiable() {
         String hash = LegacyDigest.hashPassword("ops-console-secret");
         assertTrue(hash.startsWith("120000$"));

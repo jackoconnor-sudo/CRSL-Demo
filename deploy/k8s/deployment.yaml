@@ -21,6 +21,9 @@ spec:
     spec:
       securityContext:
         runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
       containers:
         - name: ratings-service
           image: northgate/ratings-service:1.4.2
