@@ -6,7 +6,7 @@
   "issueCount": 42,
   "issues": [
     {
-      "issueInstanceId": "BFC8633964638D8E",
+      "issueInstanceId": "48B118273F3DD956",
       "category": "SQL Injection",
       "kingdom": "Input Validation and Representation",
       "friority": "Critical",
@@ -16,7 +16,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/repository/RatingsRepository.java",
-        "lineNumber": 28
+        "lineNumber": 29
       },
       "abstract": "The issuerId path variable reaches a statement built by concatenation.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -24,7 +24,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "AB40CE15F16DC67C",
+      "issueInstanceId": "939A9E251EC2B9F3",
       "category": "SQL Injection",
       "kingdom": "Input Validation and Representation",
       "friority": "Critical",
@@ -34,7 +34,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/repository/RatingsRepository.java",
-        "lineNumber": 34
+        "lineNumber": 35
       },
       "abstract": "The q request parameter reaches a statement built by concatenation.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -42,7 +42,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "936573FC1BBD3380",
+      "issueInstanceId": "53A317A417B673F8",
       "category": "SQL Injection",
       "kingdom": "Input Validation and Representation",
       "friority": "Critical",
@@ -52,7 +52,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/repository/RatingsRepository.java",
-        "lineNumber": 36
+        "lineNumber": 38
       },
       "abstract": "The sector request parameter is appended to the search predicate.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -60,25 +60,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "6F99B2D1E190B6D6",
-      "category": "SQL Injection",
-      "kingdom": "Input Validation and Representation",
-      "friority": "Critical",
-      "analyzer": "Dataflow",
-      "cwe": "CWE-89",
-      "confidence": 4.8,
-      "impact": 4.0,
-      "primaryLocation": {
-        "filePath": "ratings-service/src/main/java/com/northgate/ratings/repository/RatingsRepository.java",
-        "lineNumber": 42
-      },
-      "abstract": "quoteCsv quotes but does not escape; the grades parameter reaches the statement.",
-      "scanDate": "2026-02-17T02:14:38Z",
-      "engineVersion": "22.2.0.0007",
-      "auditStatus": "Not Reviewed"
-    },
-    {
-      "issueInstanceId": "92570B8EEC28A57F",
+      "issueInstanceId": "0BED120C216A8D19",
       "category": "SQL Injection",
       "kingdom": "Input Validation and Representation",
       "friority": "Critical",
@@ -90,13 +72,31 @@
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/repository/RatingsRepository.java",
         "lineNumber": 47
       },
+      "abstract": "quoteCsv quotes but does not escape; the grades parameter reaches the statement.",
+      "scanDate": "2026-02-17T02:14:38Z",
+      "engineVersion": "22.2.0.0007",
+      "auditStatus": "Not Reviewed"
+    },
+    {
+      "issueInstanceId": "9BE0E176048EA551",
+      "category": "SQL Injection",
+      "kingdom": "Input Validation and Representation",
+      "friority": "Critical",
+      "analyzer": "Dataflow",
+      "cwe": "CWE-89",
+      "confidence": 4.8,
+      "impact": 4.0,
+      "primaryLocation": {
+        "filePath": "ratings-service/src/main/java/com/northgate/ratings/repository/RatingsRepository.java",
+        "lineNumber": 64
+      },
       "abstract": "grade and outlook from the request body reach an UPDATE built by concatenation.",
       "scanDate": "2026-02-17T02:14:38Z",
       "engineVersion": "22.2.0.0007",
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "35EED93D5FD5E8F6",
+      "issueInstanceId": "40DF912F66DCD9AB",
       "category": "SQL Injection",
       "kingdom": "Input Validation and Representation",
       "friority": "High",
@@ -106,7 +106,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/repository/RatingsRepository.java",
-        "lineNumber": 53
+        "lineNumber": 69
       },
       "abstract": "The sector value reaches a COUNT statement built by concatenation.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -168,7 +168,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "1A97F59BF386C900",
+      "issueInstanceId": "3F2C42426C7FCD17",
       "category": "XML External Entity Injection",
       "kingdom": "Input Validation and Representation",
       "friority": "Critical",
@@ -178,7 +178,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/feed/LegacyFeedParser.java",
-        "lineNumber": 31
+        "lineNumber": 33
       },
       "abstract": "DocumentBuilderFactory is used without disallow-doctype-decl on request supplied XML.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -196,7 +196,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/feed/LegacyFeedParser.java",
-        "lineNumber": 45
+        "lineNumber": 47
       },
       "abstract": "The normalise path parses request supplied XML with an unhardened factory.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -204,7 +204,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "14E6953A1BB1B981",
+      "issueInstanceId": "7170B23D9AB45F79",
       "category": "XML External Entity Injection",
       "kingdom": "Input Validation and Representation",
       "friority": "High",
@@ -214,7 +214,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/feed/LegacyFeedParser.java",
-        "lineNumber": 47
+        "lineNumber": 49
       },
       "abstract": "TransformerFactory is created without ACCESS_EXTERNAL_DTD restrictions.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -222,7 +222,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "F2272BB394188EF4",
+      "issueInstanceId": "B772D1F23EC74F2E",
       "category": "Password Management: Hardcoded Password",
       "kingdom": "Security Features",
       "friority": "Critical",
@@ -232,7 +232,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/integration/WarehouseClient.java",
-        "lineNumber": 26
+        "lineNumber": 35
       },
       "abstract": "A service account password is compiled into the artifact.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -240,7 +240,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "B4550CDD80B33EDA",
+      "issueInstanceId": "142129FB031B8309",
       "category": "Key Management: Hardcoded Encryption Key",
       "kingdom": "Security Features",
       "friority": "Critical",
@@ -250,7 +250,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/integration/WarehouseClient.java",
-        "lineNumber": 27
+        "lineNumber": 36
       },
       "abstract": "A live warehouse API token is compiled into the artifact.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -258,7 +258,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "922B8440831015CB",
+      "issueInstanceId": "5CD875394951602E",
       "category": "Key Management: Hardcoded Encryption Key",
       "kingdom": "Security Features",
       "friority": "Critical",
@@ -268,7 +268,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/crypto/LegacyDigest.java",
-        "lineNumber": 21
+        "lineNumber": 20
       },
       "abstract": "The field encryption key is a string constant.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -276,7 +276,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "6675A6634708BF69",
+      "issueInstanceId": "EC32BAD61539A89E",
       "category": "Password Management: Hardcoded Password",
       "kingdom": "Security Features",
       "friority": "High",
@@ -286,7 +286,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/controller/SessionController.java",
-        "lineNumber": 23
+        "lineNumber": 28
       },
       "abstract": "The ops console credential is compared against a constant digest.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -294,7 +294,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "18EB466FC8C79CE8",
+      "issueInstanceId": "600BDD33C72DF89C",
       "category": "Password Management: Password in Configuration File",
       "kingdom": "Environment",
       "friority": "High",
@@ -322,7 +322,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/resources/application.yml",
-        "lineNumber": 27
+        "lineNumber": 28
       },
       "abstract": "The warehouse API token is committed to the repository.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -330,7 +330,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "5FD5B8A029D91839",
+      "issueInstanceId": "8196E6969C554BAA",
       "category": "Password Management: Password in Configuration File",
       "kingdom": "Environment",
       "friority": "High",
@@ -340,7 +340,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/Dockerfile",
-        "lineNumber": 7
+        "lineNumber": 3
       },
       "abstract": "The warehouse API token is baked into an image layer as an environment variable.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -348,7 +348,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "EFE52D17D5081283",
+      "issueInstanceId": "A95383774A46CEE4",
       "category": "Weak Cryptographic Hash",
       "kingdom": "Security Features",
       "friority": "High",
@@ -358,7 +358,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/crypto/LegacyDigest.java",
-        "lineNumber": 30
+        "lineNumber": 32
       },
       "abstract": "Passwords are hashed with MD5 and an unsalted single pass.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -366,7 +366,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "24EC72DD9899A817",
+      "issueInstanceId": "35BE6D772DD489E9",
       "category": "Weak Cryptographic Hash",
       "kingdom": "Security Features",
       "friority": "Medium",
@@ -376,7 +376,7 @@
       "impact": 2.5,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/crypto/LegacyDigest.java",
-        "lineNumber": 40
+        "lineNumber": 49
       },
       "abstract": "Values are fingerprinted with MD5.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -384,7 +384,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "BB9A714ABE541AE6",
+      "issueInstanceId": "76A95067DEA91303",
       "category": "Weak Password Storage",
       "kingdom": "Security Features",
       "friority": "High",
@@ -394,7 +394,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/controller/SessionController.java",
-        "lineNumber": 36
+        "lineNumber": 38
       },
       "abstract": "Authentication compares an MD5 digest of the submitted password.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -402,7 +402,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "773D25ED6B57FDF0",
+      "issueInstanceId": "BA74418F9A8EFD2F",
       "category": "Weak Encryption",
       "kingdom": "Security Features",
       "friority": "High",
@@ -412,7 +412,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/crypto/LegacyDigest.java",
-        "lineNumber": 49
+        "lineNumber": 61
       },
       "abstract": "Field encryption uses DES in ECB mode.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -420,7 +420,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "6ECE3EB84C2BAE55",
+      "issueInstanceId": "C80302D47D5956BB",
       "category": "Weak Encryption",
       "kingdom": "Security Features",
       "friority": "High",
@@ -430,7 +430,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/crypto/LegacyDigest.java",
-        "lineNumber": 59
+        "lineNumber": 63
       },
       "abstract": "Field decryption uses DES in ECB mode.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -438,7 +438,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "56AADEADA8E1648B",
+      "issueInstanceId": "88265F943F11F53C",
       "category": "Weak Encryption: Insecure Key Length",
       "kingdom": "Security Features",
       "friority": "Medium",
@@ -448,7 +448,7 @@
       "impact": 2.5,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/crypto/LegacyDigest.java",
-        "lineNumber": 73
+        "lineNumber": 64
       },
       "abstract": "A 56 bit DES key is derived from a string constant.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -456,7 +456,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "AD9A739249E58EB7",
+      "issueInstanceId": "E02DD2E945894413",
       "category": "Command Injection",
       "kingdom": "Input Validation and Representation",
       "friority": "Critical",
@@ -466,7 +466,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/controller/ExportController.java",
-        "lineNumber": 41
+        "lineNumber": 60
       },
       "abstract": "The format and desk request parameters are concatenated into a shell command.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -474,7 +474,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "1F2774A4DD11B848",
+      "issueInstanceId": "687D8F22F1FB1551",
       "category": "Command Injection",
       "kingdom": "Input Validation and Representation",
       "friority": "Critical",
@@ -484,7 +484,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/controller/ExportController.java",
-        "lineNumber": 44
+        "lineNumber": 64
       },
       "abstract": "The concatenated command is executed through /bin/sh -c.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -492,7 +492,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "3F9C47D273C22869",
+      "issueInstanceId": "11FAAD7085A1227D",
       "category": "Path Manipulation",
       "kingdom": "Input Validation and Representation",
       "friority": "High",
@@ -502,7 +502,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/controller/ExportController.java",
-        "lineNumber": 66
+        "lineNumber": 89
       },
       "abstract": "The name request parameter is concatenated into a filesystem path.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -510,7 +510,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "3BAEFC66CF2F485B",
+      "issueInstanceId": "4856F61027ABD77E",
       "category": "Path Manipulation",
       "kingdom": "Input Validation and Representation",
       "friority": "High",
@@ -520,7 +520,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/controller/ExportController.java",
-        "lineNumber": 70
+        "lineNumber": 93
       },
       "abstract": "File contents selected by the caller are returned to the caller.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -528,7 +528,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "90D676389200E473",
+      "issueInstanceId": "AAA27015A2DD4914",
       "category": "Path Manipulation",
       "kingdom": "Input Validation and Representation",
       "friority": "Medium",
@@ -538,7 +538,7 @@
       "impact": 2.5,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/controller/ExportController.java",
-        "lineNumber": 79
+        "lineNumber": 105
       },
       "abstract": "The subdir request parameter is concatenated into a filesystem path.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -546,7 +546,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "AA2635733EC9C4AE",
+      "issueInstanceId": "349DA8954FC73EC6",
       "category": "Header Manipulation",
       "kingdom": "Input Validation and Representation",
       "friority": "Medium",
@@ -556,7 +556,7 @@
       "impact": 2.5,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/controller/ExportController.java",
-        "lineNumber": 72
+        "lineNumber": 95
       },
       "abstract": "An unvalidated request parameter is written into a response header.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -564,7 +564,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "1C987A79DA0EFFBA",
+      "issueInstanceId": "D101074966EFEF80",
       "category": "Dynamic Code Evaluation: Unsafe Deserialization",
       "kingdom": "Input Validation and Representation",
       "friority": "Critical",
@@ -574,7 +574,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/security/SessionCookieCodec.java",
-        "lineNumber": 36
+        "lineNumber": 63
       },
       "abstract": "A cookie supplied by the client is deserialized with no allowlist.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -582,7 +582,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "30FBED516B16CF76",
+      "issueInstanceId": "55E2BF3710A2D866",
       "category": "Dynamic Code Evaluation: Unsafe Deserialization",
       "kingdom": "Input Validation and Representation",
       "friority": "Critical",
@@ -592,7 +592,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/security/SessionCookieCodec.java",
-        "lineNumber": 37
+        "lineNumber": 71
       },
       "abstract": "readObject runs before the cast is checked.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -610,7 +610,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/controller/SessionController.java",
-        "lineNumber": 59
+        "lineNumber": 62
       },
       "abstract": "The whoami endpoint deserializes the session cookie on an unauthenticated path.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -628,7 +628,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/config/AdminApiFilter.java",
-        "lineNumber": 38
+        "lineNumber": 50
       },
       "abstract": "The filter evaluates the admin condition and then forwards every request regardless.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -654,7 +654,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "F253A18D6A1A3425",
+      "issueInstanceId": "9DE75B0E48D457EC",
       "category": "Log Forging",
       "kingdom": "Input Validation and Representation",
       "friority": "Medium",
@@ -664,7 +664,7 @@
       "impact": 2.5,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/config/AdminApiFilter.java",
-        "lineNumber": 37
+        "lineNumber": 44
       },
       "abstract": "The X-Forwarded-User header is written to the log without neutralising newlines.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -690,7 +690,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "11C5E9E555CFA5E3",
+      "issueInstanceId": "64A4DC3832EA28CF",
       "category": "Log Forging",
       "kingdom": "Input Validation and Representation",
       "friority": "Low",
@@ -700,7 +700,7 @@
       "impact": 2.5,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/integration/WarehouseClient.java",
-        "lineNumber": 44
+        "lineNumber": 55
       },
       "abstract": "The issuerId value is written to the log unneutralised.",
       "scanDate": "2026-02-17T02:14:38Z",

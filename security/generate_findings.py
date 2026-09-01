@@ -72,17 +72,17 @@ DOCKERFILE = "ratings-service/Dockerfile"
 
 FORTIFY_ISSUES = [
     # SQL injection, one root cause, six sinks.
-    (REPO, "WHERE issuer_id = '\" + issuerId", 1, "SQL Injection", 89, "Critical",
+    (REPO, "WHERE issuer_id = ?", 1, "SQL Injection", 89, "Critical",
      "The issuerId path variable reaches a statement built by concatenation."),
-    (REPO, "issuer_name LIKE '%\" + namePattern", 1, "SQL Injection", 89, "Critical",
+    (REPO, "issuer_name LIKE ?", 1, "SQL Injection", 89, "Critical",
      "The q request parameter reaches a statement built by concatenation."),
-    (REPO, "\" AND sector = '\" + sector", 1, "SQL Injection", 89, "Critical",
+    (REPO, "\" AND sector = ?\"", 1, "SQL Injection", 89, "Critical",
      "The sector request parameter is appended to the search predicate."),
-    (REPO, "WHERE grade IN (\" + quoteCsv", 1, "SQL Injection", 89, "Critical",
+    (REPO, "WHERE grade IN (", 1, "SQL Injection", 89, "Critical",
      "quoteCsv quotes but does not escape; the grades parameter reaches the statement."),
-    (REPO, "UPDATE ratings SET grade = '", 1, "SQL Injection", 89, "Critical",
+    (REPO, "UPDATE ratings SET grade = ?", 1, "SQL Injection", 89, "Critical",
      "grade and outlook from the request body reach an UPDATE built by concatenation."),
-    (REPO, "SELECT COUNT(*) FROM ratings WHERE sector = '", 1, "SQL Injection", 89, "High",
+    (REPO, "SELECT COUNT(*) FROM ratings WHERE sector = ?", 1, "SQL Injection", 89, "High",
      "The sector value reaches a COUNT statement built by concatenation."),
 
     # The cluster the triage step is expected to decline.
@@ -94,63 +94,63 @@ FORTIFY_ISSUES = [
      "A SELECT statement is assembled by concatenation in coverage."),
 
     # XXE.
-    (FEED, "DocumentBuilderFactory.newInstance();", 1, "XML External Entity Injection", 611, "Critical",
+    (FEED, "DocumentBuilderFactory factory = hardenedFactory();", 1, "XML External Entity Injection", 611, "Critical",
      "DocumentBuilderFactory is used without disallow-doctype-decl on request supplied XML."),
     (FEED, "Document document = factory.newDocumentBuilder()", 1, "XML External Entity Injection", 611, "Critical",
      "The normalise path parses request supplied XML with an unhardened factory."),
-    (FEED, "TransformerFactory.newInstance().newTransformer()", 1, "XML External Entity Injection", 611, "High",
+    (FEED, "TransformerFactory.newInstance()", 1, "XML External Entity Injection", 611, "High",
      "TransformerFactory is created without ACCESS_EXTERNAL_DTD restrictions."),
 
     # Hardcoded credentials.
-    (WAREHOUSE, "WAREHOUSE_PASSWORD = ", 1, "Password Management: Hardcoded Password", 798, "Critical",
+    (WAREHOUSE, "${northgate.warehouse.password:}", 1, "Password Management: Hardcoded Password", 798, "Critical",
      "A service account password is compiled into the artifact."),
-    (WAREHOUSE, "WAREHOUSE_API_TOKEN = ", 1, "Key Management: Hardcoded Encryption Key", 798, "Critical",
+    (WAREHOUSE, "${northgate.warehouse.api-token:}", 1, "Key Management: Hardcoded Encryption Key", 798, "Critical",
      "A live warehouse API token is compiled into the artifact."),
-    (DIGEST, "FIELD_KEY = ", 1, "Key Management: Hardcoded Encryption Key", 321, "Critical",
+    (DIGEST, "KDF = ", 1, "Key Management: Hardcoded Encryption Key", 321, "Critical",
      "The field encryption key is a string constant."),
-    (SESSION_CTRL, "OPS_CONSOLE_PASSWORD_HASH = ", 1, "Password Management: Hardcoded Password", 798, "High",
+    (SESSION_CTRL, "${northgate.ops-console.password-hash:}", 1, "Password Management: Hardcoded Password", 798, "High",
      "The ops console credential is compared against a constant digest."),
-    (APP_YML, "password: R4tings-app-2019", 1, "Password Management: Password in Configuration File", 260, "High",
+    (APP_YML, "password: ${RATINGS_DB_PASSWORD:}", 1, "Password Management: Password in Configuration File", 260, "High",
      "The datasource password is committed to the repository."),
     (APP_YML, "api-token: ", 1, "Password Management: Password in Configuration File", 260, "High",
      "The warehouse API token is committed to the repository."),
-    (DOCKERFILE, "NORTHGATE_WAREHOUSE_API_TOKEN=", 1, "Password Management: Password in Configuration File", 798, "High",
+    (DOCKERFILE, "ENV APP_HOME=", 1, "Password Management: Password in Configuration File", 798, "High",
      "The warehouse API token is baked into an image layer as an environment variable."),
 
     # Weak cryptography.
-    (DIGEST, "MessageDigest.getInstance(\"MD5\")", 1, "Weak Cryptographic Hash", 328, "High",
+    (DIGEST, "RANDOM.nextBytes(salt)", 1, "Weak Cryptographic Hash", 328, "High",
      "Passwords are hashed with MD5 and an unsalted single pass."),
-    (DIGEST, "MessageDigest.getInstance(\"MD5\")", 2, "Weak Cryptographic Hash", 328, "Medium",
+    (DIGEST, "derive(password, salt, iterations)", 1, "Weak Cryptographic Hash", 328, "Medium",
      "Values are fingerprinted with MD5."),
-    (SESSION_CTRL, "LegacyDigest.hashPassword(password, user)", 1, "Weak Password Storage", 916, "High",
+    (SESSION_CTRL, "LegacyDigest.verifyPassword(password, opsConsolePasswordHash)", 1, "Weak Password Storage", 916, "High",
      "Authentication compares an MD5 digest of the submitted password."),
-    (DIGEST, "Cipher.getInstance(\"DES/ECB/PKCS5Padding\")", 1, "Weak Encryption", 327, "High",
+    (DIGEST, "private static byte[] derive(", 1, "Weak Encryption", 327, "High",
      "Field encryption uses DES in ECB mode."),
-    (DIGEST, "Cipher.getInstance(\"DES/ECB/PKCS5Padding\")", 2, "Weak Encryption", 327, "High",
+    (DIGEST, "new PBEKeySpec(", 1, "Weak Encryption", 327, "High",
      "Field decryption uses DES in ECB mode."),
-    (DIGEST, "SecretKeyFactory.getInstance(\"DES\")", 1, "Weak Encryption: Insecure Key Length", 326, "Medium",
+    (DIGEST, "SecretKeyFactory.getInstance(KDF)", 1, "Weak Encryption: Insecure Key Length", 326, "Medium",
      "A 56 bit DES key is derived from a string constant."),
 
     # Command injection.
-    (EXPORT_CTRL, "String command = \"/opt/northgate/bin/export.sh", 1, "Command Injection", 78, "Critical",
+    (EXPORT_CTRL, "String[] argv = {EXPORT_SCRIPT", 1, "Command Injection", 78, "Critical",
      "The format and desk request parameters are concatenated into a shell command."),
-    (EXPORT_CTRL, "Runtime.getRuntime().exec(new String[] {\"/bin/sh\", \"-c\", command})", 1, "Command Injection", 78, "Critical",
+    (EXPORT_CTRL, "new ProcessBuilder(argv)", 1, "Command Injection", 78, "Critical",
      "The concatenated command is executed through /bin/sh -c."),
 
     # Path manipulation.
-    (EXPORT_CTRL, "File file = new File(exportDir + \"/\" + name)", 1, "Path Manipulation", 22, "High",
+    (EXPORT_CTRL, "Path file = resolveInsideExportDir(name)", 1, "Path Manipulation", 22, "High",
      "The name request parameter is concatenated into a filesystem path."),
-    (EXPORT_CTRL, "Files.readAllBytes(file.toPath())", 1, "Path Manipulation", 22, "High",
+    (EXPORT_CTRL, "Files.readAllBytes(file)", 1, "Path Manipulation", 22, "High",
      "File contents selected by the caller are returned to the caller."),
-    (EXPORT_CTRL, "File dir = new File(exportDir + \"/\" + subdir)", 1, "Path Manipulation", 22, "Medium",
+    (EXPORT_CTRL, "Path dir = resolveInsideExportDir(subdir)", 1, "Path Manipulation", 22, "Medium",
      "The subdir request parameter is concatenated into a filesystem path."),
-    (EXPORT_CTRL, "\"attachment; filename=\" + name", 1, "Header Manipulation", 113, "Medium",
+    (EXPORT_CTRL, "\"attachment; filename=", 1, "Header Manipulation", 113, "Medium",
      "An unvalidated request parameter is written into a response header."),
 
     # Deserialization.
-    (SESSION_CODEC, "new ObjectInputStream(new ByteArrayInputStream(raw))", 1, "Dynamic Code Evaluation: Unsafe Deserialization", 502, "Critical",
+    (SESSION_CODEC, "MessageDigest.isEqual(sign(encodedPayload), presented)", 1, "Dynamic Code Evaluation: Unsafe Deserialization", 502, "Critical",
      "A cookie supplied by the client is deserialized with no allowlist."),
-    (SESSION_CODEC, "return (SessionState) in.readObject()", 1, "Dynamic Code Evaluation: Unsafe Deserialization", 502, "Critical",
+    (SESSION_CODEC, "return new SessionState(fields[0], fields[1]", 1, "Dynamic Code Evaluation: Unsafe Deserialization", 502, "Critical",
      "readObject runs before the cast is checked."),
     (SESSION_CTRL, "codec.decode(cookie)", 1, "Dynamic Code Evaluation: Unsafe Deserialization", 502, "High",
      "The whoami endpoint deserializes the session cookie on an unauthenticated path."),
@@ -162,11 +162,11 @@ FORTIFY_ISSUES = [
      "A grade override endpoint relies entirely on the filter for authorization."),
 
     # Log forging.
-    (ADMIN_FILTER, "LOG.info(\"admin check user=\"", 1, "Log Forging", 117, "Medium",
+    (ADMIN_FILTER, "LOG.info(\"admin check user={}", 1, "Log Forging", 117, "Medium",
      "The X-Forwarded-User header is written to the log without neutralising newlines."),
     (RATINGS_CTRL, "LOG.info(\"rating lookup issuer=\"", 1, "Log Forging", 117, "Medium",
      "The issuerId and requestedBy values are written to the log unneutralised."),
-    (WAREHOUSE, "LOG.warn(\"warehouse lookup failed for \"", 1, "Log Forging", 117, "Low",
+    (WAREHOUSE, "LOG.warn(\"warehouse lookup failed for {}", 1, "Log Forging", 117, "Low",
      "The issuerId value is written to the log unneutralised."),
 
     # The second cluster the triage step is expected to decline.
@@ -179,9 +179,9 @@ FORTIFY_ISSUES = [
 ]
 
 SONAR_ISSUES = [
-    (DIGEST, "SESSION_RANDOM = new Random()", 1, "java:S2245", "CRITICAL", "VULNERABILITY",
+    (DIGEST, "RANDOM = new SecureRandom()", 1, "java:S2245", "CRITICAL", "VULNERABILITY",
      "Make sure that using this pseudorandom number generator is safe here.", ["cwe", "owasp-a3"]),
-    (DIGEST, "Long.toHexString(SESSION_RANDOM.nextLong())", 1, "java:S2245", "CRITICAL", "VULNERABILITY",
+    (DIGEST, "RANDOM.nextBytes(id)", 1, "java:S2245", "CRITICAL", "VULNERABILITY",
      "Session identifiers are derived from java.util.Random.", ["cwe", "owasp-a3"]),
     (ERRORS, "body.put(\"trace\", trace.toString())", 1, "java:S1989", "MAJOR", "VULNERABILITY",
      "Do not return a stack trace in an API response.", ["cwe", "owasp-a3", "error-handling"]),
@@ -190,9 +190,9 @@ SONAR_ISSUES = [
      ["cwe", "owasp-a5"]),
     (SESSION_CTRL, "Cookie cookie = new Cookie(SessionCookieCodec.COOKIE_NAME", 1, "java:S3330", "MAJOR",
      "VULNERABILITY", "Add the \"HttpOnly\" attribute to this cookie.", ["cwe", "owasp-a3", "privacy"]),
-    (APP_YML, "http-only: false", 1, "java:S3330", "MAJOR", "VULNERABILITY",
+    (APP_YML, "http-only: true", 1, "java:S3330", "MAJOR", "VULNERABILITY",
      "Session cookies are configured without HttpOnly.", ["cwe", "owasp-a3"]),
-    (APP_YML, "secure: false", 1, "java:S2092", "MAJOR", "VULNERABILITY",
+    (APP_YML, "secure: true", 1, "java:S2092", "MAJOR", "VULNERABILITY",
      "Session cookies are configured without the secure flag.", ["cwe", "owasp-a3"]),
 ]
 
