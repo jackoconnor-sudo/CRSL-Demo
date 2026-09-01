@@ -19,9 +19,13 @@ spec:
         app.kubernetes.io/name: ratings-service
         app.kubernetes.io/version: 1.4.2
     spec:
-      # No securityContext. The image runs as root and the manifest does nothing about
-      # it, which is how prisma/prisma-image-scan.json ends up with a compliance failure
-      # that has a Kubernetes side as well as a Dockerfile side.
+      # IDs match the northgate user in ratings-service/Dockerfile. fsGroup makes the
+      # exports emptyDir group-writable, since the mount hides the image's chown.
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
       containers:
         - name: ratings-service
           image: northgate/ratings-service:1.4.2
