@@ -7,7 +7,10 @@ and the value is in the grouping, the reachability call and the merged pull requ
 in the patch.**
 
 Everything below is rehearsed against a repository that fails its own gate on a clean
-checkout. Nothing needs to be reset between runs except closing the pull requests you open.
+checkout. Remediation always lands on a branch, never on `main`, so the fixture stays red
+between runs. To reset after a run: `./demo/reset.sh` to preview, `./demo/reset.sh --apply`
+to close the demo pull requests, delete their branches, and put `main` back on the
+`demo-baseline` tag.
 
 ## Before the call
 
@@ -21,6 +24,8 @@ checkout. Nothing needs to be reset between runs except closing the pull request
       run summary from a previous run available.
 - [ ] Local terminal in the repository, build already warm (`mvn -B clean verify` once).
 - [ ] Decide in advance: GitHub **or** Azure DevOps. Do not show both.
+- [ ] `./demo/reset.sh` run after the previous rehearsal, so `main` is on `demo-baseline`
+      and no stale pull requests are open.
 - [ ] Deployment section: skip unless the customer asked. It costs three minutes and
       proves the least interesting claim.
 
