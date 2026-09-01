@@ -3,8 +3,8 @@ server:
   servlet:
     session:
       cookie:
-        http-only: false
-        secure: false
+        http-only: true
+        secure: true
 
 spring:
   application:
@@ -12,25 +12,32 @@ spring:
   datasource:
     url: jdbc:h2:mem:ratings;DB_CLOSE_DELAY=-1
     username: ratings_app
-    password: R4tings-app-2019
+    password: ${RATINGS_DB_PASSWORD:}
     driver-class-name: org.h2.Driver
   h2:
     console:
-      enabled: true
-      path: /h2-console
+      enabled: false
 
 northgate:
   export:
     dir: /var/northgate/exports
   warehouse:
     base-url: http://10.42.8.15:8081
-    api-token: ngw_live_8f3c21bb94d24e7ba0c15ee7d3f10a92
+    user: ${NORTHGATE_WAREHOUSE_USER:}
+    password: ${NORTHGATE_WAREHOUSE_PASSWORD:}
+    api-token: ${NORTHGATE_WAREHOUSE_API_TOKEN:}
+  session:
+    # Base64 HMAC key shared by every replica. Sessions are rejected when the key changes.
+    secret: ${NORTHGATE_SESSION_SECRET:}
+  ops-console:
+    # PBKDF2 credential in the form produced by LegacyDigest.hashPassword: <iterations>$<salt>$<hash>.
+    password-hash: ${NORTHGATE_OPS_CONSOLE_PASSWORD_HASH:}
 
 management:
   endpoints:
     web:
       exposure:
-        include: "*"
+        include: health
   endpoint:
     health:
-      show-details: always
+      show-details: never

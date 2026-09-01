@@ -19,13 +19,17 @@ spec:
         app.kubernetes.io/name: ratings-service
         app.kubernetes.io/version: 1.4.2
     spec:
-      # No securityContext. The image runs as root and the manifest does nothing about
-      # it, which is how prisma/prisma-image-scan.json ends up with a compliance failure
-      # that has a Kubernetes side as well as a Dockerfile side.
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
       containers:
         - name: ratings-service
           image: northgate/ratings-service:1.4.2
           imagePullPolicy: IfNotPresent
+          securityContext:
+            allowPrivilegeEscalation: false
           ports:
             - name: http
               containerPort: 8080

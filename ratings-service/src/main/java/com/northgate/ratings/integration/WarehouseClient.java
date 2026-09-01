@@ -1,6 +1,7 @@
 package com.northgate.ratings.integration;
 
 import java.nio.charset.StandardCharsets;
+import java.util.regex.Pattern;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -14,40 +15,50 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
- * Talks to the ratings warehouse. The service account below was issued to the ratings
- * platform in 2019 and has not been rotated since.
+ * Talks to the ratings warehouse. Credentials come from the ratings-warehouse Secret via
+ * the northgate.warehouse.* properties.
  */
 @Component
 public class WarehouseClient {
 
     private static final Logger LOG = LogManager.getLogger(WarehouseClient.class);
 
-    private static final String WAREHOUSE_USER = "svc_ratings";
-    private static final String WAREHOUSE_PASSWORD = "Wareh0use-2019!";
-    private static final String WAREHOUSE_API_TOKEN = "ngw_live_8f3c21bb94d24e7ba0c15ee7d3f10a92";
+    private static final Pattern ISSUER_ID = Pattern.compile("[A-Za-z0-9_-]{1,16}");
 
     private final String baseUrl;
+    private final String user;
+    private final String password;
+    private final String apiToken;
 
-    public WarehouseClient(@Value("${northgate.warehouse.base-url:http://10.42.8.15:8081}") String baseUrl) {
+    public WarehouseClient(@Value("${northgate.warehouse.base-url:http://10.42.8.15:8081}") String baseUrl,
+                           @Value("${northgate.warehouse.user:}") String user,
+                           @Value("${northgate.warehouse.password:}") String password,
+                           @Value("${northgate.warehouse.api-token:}") String apiToken) {
         this.baseUrl = baseUrl;
+        this.user = user;
+        this.password = password;
+        this.apiToken = apiToken;
     }
 
     public String fetchIssuerDossier(String issuerId) {
+        if (issuerId == null || !ISSUER_ID.matcher(issuerId).matches()) {
+            throw new IllegalArgumentException("invalid issuer id");
+        }
         try (CloseableHttpClient client = HttpClients.createDefault()) {
             HttpGet get = new HttpGet(baseUrl + "/warehouse/issuers/" + issuerId);
             get.addHeader("Authorization", "Basic " + basicAuth());
-            get.addHeader("X-Api-Token", WAREHOUSE_API_TOKEN);
+            get.addHeader("X-Api-Token", apiToken);
             try (CloseableHttpResponse response = client.execute(get)) {
                 return EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
             }
         } catch (Exception e) {
-            LOG.warn("warehouse lookup failed for " + issuerId + ": " + e.getMessage());
+            LOG.warn("warehouse lookup failed for {}: {}", issuerId, e.getMessage());
             return null;
         }
     }
 
-    private static String basicAuth() {
-        String pair = WAREHOUSE_USER + ":" + WAREHOUSE_PASSWORD;
+    private String basicAuth() {
+        String pair = user + ":" + password;
         return new String(Base64.encodeBase64(pair.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8);
     }
 }

@@ -9,12 +9,12 @@
   "total": 7,
   "issues": [
     {
-      "key": "BDEC284477BD1DF2",
+      "key": "6A6C5DD959D93F05",
       "rule": "java:S2245",
       "severity": "CRITICAL",
       "component": "northgate:ratings-service/src/main/java/com/northgate/ratings/crypto/LegacyDigest.java",
       "project": "northgate",
-      "line": 23,
+      "line": 27,
       "message": "Make sure that using this pseudorandom number generator is safe here.",
       "type": "VULNERABILITY",
       "effort": "30min",
@@ -26,12 +26,12 @@
       "status": "OPEN"
     },
     {
-      "key": "689BFA54DBFDE90C",
+      "key": "997A7411C48DBBB7",
       "rule": "java:S2245",
       "severity": "CRITICAL",
       "component": "northgate:ratings-service/src/main/java/com/northgate/ratings/crypto/LegacyDigest.java",
       "project": "northgate",
-      "line": 68,
+      "line": 62,
       "message": "Session identifiers are derived from java.util.Random.",
       "type": "VULNERABILITY",
       "effort": "30min",
@@ -83,7 +83,7 @@
       "severity": "MAJOR",
       "component": "northgate:ratings-service/src/main/java/com/northgate/ratings/controller/SessionController.java",
       "project": "northgate",
-      "line": 40,
+      "line": 41,
       "message": "Add the \"HttpOnly\" attribute to this cookie.",
       "type": "VULNERABILITY",
       "effort": "30min",
@@ -96,7 +96,7 @@
       "status": "OPEN"
     },
     {
-      "key": "F28D046B2B470292",
+      "key": "FC4B8F5D8920DB34",
       "rule": "java:S3330",
       "severity": "MAJOR",
       "component": "northgate:ratings-service/src/main/resources/application.yml",
@@ -113,7 +113,7 @@
       "status": "OPEN"
     },
     {
-      "key": "64B9FAF995258BB1",
+      "key": "6D6B61F6ECE0EBA2",
       "rule": "java:S2092",
       "severity": "MAJOR",
       "component": "northgate:ratings-service/src/main/resources/application.yml",

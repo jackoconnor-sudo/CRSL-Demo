@@ -11,6 +11,13 @@ while [ $# -gt 0 ]; do
     *) shift ;;
   esac
 done
+case "$FORMAT" in
+  csv|json|xml) ;;
+  *) echo "unsupported format" >&2; exit 2 ;;
+esac
+case "$DESK" in
+  *[!a-z0-9_-]*|"") echo "invalid desk" >&2; exit 2 ;;
+esac
 OUT="/var/northgate/exports/${DESK}-$(date +%Y%m%d).${FORMAT}"
 : > "$OUT"
 echo "wrote $OUT"
