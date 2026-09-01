@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: northgate-ratings-service
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    # Point this at your fork once the repository is pushed.
+    repoURL: https://github.com/OWNER/northgate-ratings-platform.git
+    targetRevision: main
+    path: deploy/k8s
+    directory:
+      exclude: "secret.example.yaml"
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: northgate
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+    retry:
+      limit: 3
+      backoff:
+        duration: 10s
+        maxDuration: 2m
+        factor: 2

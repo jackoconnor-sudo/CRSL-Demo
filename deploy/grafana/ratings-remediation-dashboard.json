@@ -1,0 +1,174 @@
+{
+  "uid": "northgate-remediation",
+  "title": "Northgate remediation throughput",
+  "tags": ["northgate", "remediation", "demo"],
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "version": 1,
+  "refresh": "5m",
+  "time": {
+    "from": "now-90d",
+    "to": "now"
+  },
+  "templating": {
+    "list": [
+      {
+        "name": "repo",
+        "label": "Repository",
+        "type": "textbox",
+        "query": "northgate-ratings-platform",
+        "current": {
+          "text": "northgate-ratings-platform",
+          "value": "northgate-ratings-platform"
+        }
+      }
+    ]
+  },
+  "panels": [
+    {
+      "type": "text",
+      "title": "What this dashboard is for",
+      "gridPos": { "h": 5, "w": 24, "x": 0, "y": 0 },
+      "options": {
+        "mode": "markdown",
+        "content": "Throughput of remediation work, measured on merged changes rather than opened pull requests. An opened pull request is not a closed finding.\n\nThe two rate panels below are the ones that matter in a review: **cost per merged pull request** and **cost per closed finding**. The second is the lower of the two whenever one change closes a group — the base image bump closes 67 findings by itself.\n\nThe queue panel is the honest one. Once remediation is cheap, review and merge capacity is the limiting factor, and this is where that shows up."
+      }
+    },
+    {
+      "type": "stat",
+      "title": "Merged remediation PRs (period)",
+      "gridPos": { "h": 5, "w": 6, "x": 0, "y": 5 },
+      "targets": [
+        { "refId": "A", "expr": "sum(increase(northgate_remediation_prs_merged_total{repo=\"$repo\"}[$__range]))" }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "short", "decimals": 0, "color": { "mode": "thresholds" } },
+        "overrides": []
+      }
+    },
+    {
+      "type": "stat",
+      "title": "Findings closed (period)",
+      "gridPos": { "h": 5, "w": 6, "x": 6, "y": 5 },
+      "targets": [
+        { "refId": "A", "expr": "sum(increase(northgate_scanner_findings_closed_total{repo=\"$repo\"}[$__range]))" }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "short", "decimals": 0 },
+        "overrides": []
+      }
+    },
+    {
+      "type": "stat",
+      "title": "Cost per merged PR",
+      "gridPos": { "h": 5, "w": 6, "x": 12, "y": 5 },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(increase(northgate_remediation_cost_acu_total{repo=\"$repo\"}[$__range])) / clamp_min(sum(increase(northgate_remediation_prs_merged_total{repo=\"$repo\"}[$__range])), 1)"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "none", "decimals": 1, "custom": {} },
+        "overrides": []
+      },
+      "description": "ACUs spent in remediation sessions divided by pull requests actually merged. Sessions whose work was abandoned still count in the numerator."
+    },
+    {
+      "type": "stat",
+      "title": "Cost per closed finding",
+      "gridPos": { "h": 5, "w": 6, "x": 18, "y": 5 },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(increase(northgate_remediation_cost_acu_total{repo=\"$repo\"}[$__range])) / clamp_min(sum(increase(northgate_scanner_findings_closed_total{repo=\"$repo\"}[$__range])), 1)"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "none", "decimals": 2 },
+        "overrides": []
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "Merged PRs and findings closed per week",
+      "gridPos": { "h": 9, "w": 12, "x": 0, "y": 10 },
+      "targets": [
+        {
+          "refId": "A",
+          "legendFormat": "merged PRs",
+          "expr": "sum(increase(northgate_remediation_prs_merged_total{repo=\"$repo\"}[1w]))"
+        },
+        {
+          "refId": "B",
+          "legendFormat": "findings closed",
+          "expr": "sum(increase(northgate_scanner_findings_closed_total{repo=\"$repo\"}[1w]))"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "short", "custom": { "drawStyle": "bars", "fillOpacity": 40 } },
+        "overrides": []
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "Open scanner findings by group",
+      "gridPos": { "h": 9, "w": 12, "x": 12, "y": 10 },
+      "targets": [
+        {
+          "refId": "A",
+          "legendFormat": "{{group}}",
+          "expr": "sum by (group) (northgate_scanner_findings_open{repo=\"$repo\"})"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "short", "custom": { "drawStyle": "line", "fillOpacity": 20, "stacking": { "mode": "normal" } } },
+        "overrides": []
+      },
+      "description": "Groups: debian-base-image (67), maven-dependencies (32), application (49). The first drops to zero in a single step when the base image change merges."
+    },
+    {
+      "type": "timeseries",
+      "title": "Time from scanner finding to merged fix",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 19 },
+      "targets": [
+        {
+          "refId": "A",
+          "legendFormat": "p50",
+          "expr": "histogram_quantile(0.5, sum by (le) (rate(northgate_finding_to_merge_seconds_bucket{repo=\"$repo\"}[1w])))"
+        },
+        {
+          "refId": "B",
+          "legendFormat": "p90",
+          "expr": "histogram_quantile(0.9, sum by (le) (rate(northgate_finding_to_merge_seconds_bucket{repo=\"$repo\"}[1w])))"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "s" },
+        "overrides": []
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "Review queue: PRs open awaiting review",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 19 },
+      "targets": [
+        {
+          "refId": "A",
+          "legendFormat": "awaiting review",
+          "expr": "sum(northgate_remediation_prs_open{repo=\"$repo\", state=\"awaiting_review\"})"
+        },
+        {
+          "refId": "B",
+          "legendFormat": "changes requested",
+          "expr": "sum(northgate_remediation_prs_open{repo=\"$repo\", state=\"changes_requested\"})"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "short", "custom": { "drawStyle": "line", "fillOpacity": 10 } },
+        "overrides": []
+      },
+      "description": "If this climbs while merged PRs per week stays flat, the constraint has moved from writing fixes to reviewing them."
+    }
+  ]
+}

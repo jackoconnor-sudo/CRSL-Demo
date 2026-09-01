@@ -1,0 +1,137 @@
+# The same flow as .github/workflows, expressed for Azure DevOps.
+#
+# The remediate stage is the equivalent of gate-failure-to-devin.yml: it turns each
+# failing gate condition into one Devin session. It is a dry run until the
+# DEVIN_DISPATCH_LIVE variable is set to true in the pipeline or in a variable group.
+
+trigger:
+  branches:
+    include: [main, refs/heads/feature/*]
+
+pr:
+  branches:
+    include: [main]
+
+variables:
+  MAVEN_CACHE_FOLDER: $(Pipeline.Workspace)/.m2/repository
+  MAVEN_OPTS: "-Dmaven.repo.local=$(MAVEN_CACHE_FOLDER)"
+  DEVIN_DISPATCH_LIVE: "false"
+  DEVIN_PLAYBOOK_ID: "finding-to-merged-pr"
+
+stages:
+  - stage: build
+    displayName: Build and test
+    jobs:
+      - job: maven
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - task: JavaToolInstaller@0
+            inputs:
+              versionSpec: "8"
+              jdkArchitectureOption: x64
+              jdkSourceOption: PreInstalled
+
+          - task: Cache@2
+            inputs:
+              key: 'maven | "$(Agent.OS)" | **/pom.xml'
+              path: $(MAVEN_CACHE_FOLDER)
+
+          - script: mvn -B clean verify
+            displayName: mvn clean verify
+
+          - task: PublishTestResults@2
+            condition: succeededOrFailed()
+            inputs:
+              testResultsFiles: "**/surefire-reports/TEST-*.xml"
+
+          - script: docker build -f ratings-service/Dockerfile -t northgate/ratings-service:$(Build.BuildNumber) .
+            displayName: Build container image
+
+  - stage: gate
+    displayName: Security gate
+    dependsOn: build
+    condition: succeeded()
+    jobs:
+      - job: gate_check
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: "3.11"
+
+          - script: |
+              python3 security/generate_findings.py
+              git diff --exit-code security/ || {
+                echo "##vso[task.logissue type=error]security/ exports are stale"
+                exit 1
+              }
+            displayName: Exports match the code
+
+          - script: python3 security/gate_check.py
+            displayName: Gate
+
+          - publish: security/gate-report.json
+            condition: always()
+            artifact: gate-report
+
+  - stage: remediate
+    displayName: One Devin session per failing condition
+    dependsOn: gate
+    condition: failed()
+    jobs:
+      - job: dispatch
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: "3.11"
+
+          - script: python3 security/gate_check.py --json > $(Build.ArtifactStagingDirectory)/gate.json || true
+            displayName: Evaluate the gate
+
+          - script: |
+              python3 - "$(Build.ArtifactStagingDirectory)/gate.json" <<'PY'
+              import json, os, sys, urllib.request
+
+              report = json.load(open(sys.argv[1]))
+              live = os.environ.get("DEVIN_DISPATCH_LIVE", "false").lower() == "true"
+              api_key = os.environ.get("DEVIN_API_KEY", "")
+              playbook = os.environ.get("DEVIN_PLAYBOOK_ID", "finding-to-merged-pr")
+              repo = os.environ.get("BUILD_REPOSITORY_NAME", "northgate-ratings-platform")
+
+              for condition in report["conditions"]:
+                  if condition["status"] != "fail":
+                      continue
+                  payload = {
+                      "playbook_id": playbook,
+                      "title": "gate: {0}".format(condition["title"]),
+                      "prompt": (
+                          "The security gate condition '{id}' is failing on {repo}.\n\n"
+                          "{title}\n{detail}\n\n"
+                          "It accounts for {n} scanner findings in security/. Fix the root cause, "
+                          "keep the response contract for existing clients intact, add a test that "
+                          "fails before your change, and verify with `mvn -B clean verify` and "
+                          "`python3 security/gate_check.py`. Do not fix any other gate condition "
+                          "in this session."
+                      ).format(id=condition["id"], repo=repo, title=condition["title"],
+                               detail=condition["detail"], n=condition["findings_accounted_for"]),
+                  }
+                  if not live or not api_key:
+                      print("DRY RUN " + json.dumps(payload))
+                      continue
+                  request = urllib.request.Request(
+                      "https://api.devin.ai/v1/sessions",
+                      data=json.dumps(payload).encode("utf-8"),
+                      headers={"Authorization": "Bearer " + api_key,
+                               "Content-Type": "application/json"})
+                  with urllib.request.urlopen(request) as response:
+                      print("created " + json.load(response).get("url", "?"))
+              PY
+            displayName: Fan out
+            env:
+              DEVIN_API_KEY: $(DEVIN_API_KEY)
+              DEVIN_DISPATCH_LIVE: $(DEVIN_DISPATCH_LIVE)
+              DEVIN_PLAYBOOK_ID: $(DEVIN_PLAYBOOK_ID)

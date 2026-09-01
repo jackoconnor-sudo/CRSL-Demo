@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ratings-service
+  namespace: northgate
+  labels:
+    app.kubernetes.io/name: ratings-service
+    app.kubernetes.io/part-of: northgate-ratings-platform
+    app.kubernetes.io/version: 1.4.2
+spec:
+  replicas: 2
+  revisionHistoryLimit: 5
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ratings-service
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ratings-service
+        app.kubernetes.io/version: 1.4.2
+    spec:
+      # No securityContext. The image runs as root and the manifest does nothing about
+      # it, which is how prisma/prisma-image-scan.json ends up with a compliance failure
+      # that has a Kubernetes side as well as a Dockerfile side.
+      containers:
+        - name: ratings-service
+          image: northgate/ratings-service:1.4.2
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: ratings-service
+            - secretRef:
+                name: ratings-warehouse
+          resources:
+            requests:
+              cpu: 200m
+              memory: 512Mi
+            limits:
+              cpu: "1"
+              memory: 1Gi
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: http
+            initialDelaySeconds: 20
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: http
+            initialDelaySeconds: 60
+            periodSeconds: 30
+          volumeMounts:
+            - name: exports
+              mountPath: /var/northgate/exports
+      volumes:
+        - name: exports
+          emptyDir: {}

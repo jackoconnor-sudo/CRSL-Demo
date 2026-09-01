@@ -1,0 +1,2185 @@
+{
+  "scan_id": "d3f01a6c-9c2f-4d31-9a53-1f0c1a2b8e77",
+  "scan_date": "2026-02-17T02:14:38Z",
+  "artifact": "docker://northgate/ratings-service:1.4.2",
+  "base_image": "openjdk:8u282-jdk-buster",
+  "base_image_distro": "Debian GNU/Linux 10 (buster)",
+  "total_violations": 99,
+  "violations": [
+    {
+      "issue_id": "XRAY-89D58A22679DD5F6",
+      "severity": "Critical",
+      "type": "security",
+      "summary": "Log4Shell: JNDI lookup in message parameters allows remote code execution.",
+      "cves": [
+        {
+          "cve": "CVE-2021-44228",
+          "cvss_v3_score": 10.0
+        }
+      ],
+      "impacted_artifact": {
+        "type": "maven",
+        "name": "org.apache.logging.log4j:log4j-core",
+        "group": "org.apache.logging.log4j",
+        "artifact": "log4j-core",
+        "version": "2.14.1"
+      },
+      "fixed_versions": [
+        "2.15.0"
+      ],
+      "version_source": "log4j2.version",
+      "component_path": "northgate-ratings-platform:ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-C503D7A676E861F3",
+      "severity": "Critical",
+      "type": "security",
+      "summary": "Incomplete fix for CVE-2021-44228 in certain non-default configurations.",
+      "cves": [
+        {
+          "cve": "CVE-2021-45046",
+          "cvss_v3_score": 9.0
+        }
+      ],
+      "impacted_artifact": {
+        "type": "maven",
+        "name": "org.apache.logging.log4j:log4j-core",
+        "group": "org.apache.logging.log4j",
+        "artifact": "log4j-core",
+        "version": "2.14.1"
+      },
+      "fixed_versions": [
+        "2.16.0"
+      ],
+      "version_source": "log4j2.version",
+      "component_path": "northgate-ratings-platform:ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-771133D8C8196B9D",
+      "severity": "High",
+      "type": "security",
+      "summary": "Uncontrolled recursion in self-referential lookups causes denial of service.",
+      "cves": [
+        {
+          "cve": "CVE-2021-45105",
+          "cvss_v3_score": 5.9
+        }
+      ],
+      "impacted_artifact": {
+        "type": "maven",
+        "name": "org.apache.logging.log4j:log4j-core",
+        "group": "org.apache.logging.log4j",
+        "artifact": "log4j-core",
+        "version": "2.14.1"
+      },
+      "fixed_versions": [
+        "2.17.0"
+      ],
+      "version_source": "log4j2.version",
+      "component_path": "northgate-ratings-platform:ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-C392CB6A3DC8D4E8",
+      "severity": "Medium",
+      "type": "security",
+      "summary": "JDBC Appender allows remote code execution when configuration is attacker controlled.",
+      "cves": [
+        {
+          "cve": "CVE-2021-44832",
+          "cvss_v3_score": 6.6
+        }
+      ],
+      "impacted_artifact": {
+        "type": "maven",
+        "name": "org.apache.logging.log4j:log4j-core",
+        "group": "org.apache.logging.log4j",
+        "artifact": "log4j-core",
+        "version": "2.14.1"
+      },
+      "fixed_versions": [
+        "2.17.1"
+      ],
+      "version_source": "log4j2.version",
+      "component_path": "northgate-ratings-platform:ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-5465AFA8485BD16A",
+      "severity": "Medium",
+      "type": "security",
+      "summary": "Bundled with the vulnerable log4j-core release train.",
+      "cves": [
+        {
+          "cve": "CVE-2021-45105",
+          "cvss_v3_score": 5.9
+        }
+      ],
+      "impacted_artifact": {
+        "type": "maven",
+        "name": "org.apache.logging.log4j:log4j-api",
+        "group": "org.apache.logging.log4j",
+        "artifact": "log4j-api",
+        "version": "2.14.1"
+      },
+      "fixed_versions": [
+        "2.17.0"
+      ],
+      "version_source": "log4j2.version",
+      "component_path": "northgate-ratings-platform:ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-89A4CC85593F3B5C",
+      "severity": "Critical",
+      "type": "security",
+      "summary": "Spring4Shell: data binding on JDK 9+ allows remote code execution.",
+      "cves": [
+        {
+          "cve": "CVE-2022-22965",
+          "cvss_v3_score": 9.8
+        }
+      ],
+      "impacted_artifact": {
+        "type": "maven",
+        "name": "org.springframework:spring-beans",
+        "group": "org.springframework",
+        "artifact": "spring-beans",
+        "version": "5.2.9.RELEASE"
+      },
+      "fixed_versions": [
+        "5.3.18"
+      ],
+      "version_source": "spring-boot parent",
+      "component_path": "northgate-ratings-platform:ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-936AE9B64BA7E41E",
+      "severity": "Medium",
+      "type": "security",
+      "summary": "SpEL expression causes denial of service.",
+      "cves": [
+        {
+          "cve": "CVE-2022-22950",
+          "cvss_v3_score": 5.4
+        }
+      ],
+      "impacted_artifact": {
+        "type": "maven",
+        "name": "org.springframework:spring-core",
+        "group": "org.springframework",
+        "artifact": "spring-core",
+        "version": "5.2.9.RELEASE"
+      },
+      "fixed_versions": [
+        "5.3.17"
+      ],
+      "version_source": "spring-boot parent",
+      "component_path": "northgate-ratings-platform:ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-3D1C44F8F0BC067D",
+      "severity": "High",
+      "type": "security",
+      "summary": "WebFlux local privilege escalation.",
+      "cves": [
+        {
+          "cve": "CVE-2021-22118",
+          "cvss_v3_score": 7.8
+        }
+      ],
+      "impacted_artifact": {
+        "type": "maven",
+        "name": "org.springframework:spring-core",
+        "group": "org.springframework",
+        "artifact": "spring-core",
+        "version": "5.2.9.RELEASE"
+      },
+      "fixed_versions": [
+        "5.3.7"
+      ],
+      "version_source": "spring-boot parent",
+      "component_path": "northgate-ratings-platform:ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-36C375CEBF2EDE9D",
+      "severity": "Critical",
+      "type": "security",
+      "summary": "HttpInvokerServiceExporter deserializes untrusted input.",
+      "cves": [
+        {
+          "cve": "CVE-2016-1000027",
+          "cvss_v3_score": 9.8
+        }
+      ],
+      "impacted_artifact": {
+        "type": "maven",
+        "name": "org.springframework:spring-web",
+        "group": "org.springframework",
+        "artifact": "spring-web",
+        "version": "5.2.9.RELEASE"
+      },
+      "fixed_versions": [
+        "6.0.0"
+      ],
+      "version_source": "spring-boot parent",
+      "component_path": "northgate-ratings-platform:ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-F44DDFD311C1BCC8",
+      "severity": "Medium",
+      "type": "security",
+      "summary": "RFD protection bypass via jsessionid path parameter.",
+      "cves": [
+        {
+          "cve": "CVE-2020-5421",
+          "cvss_v3_score": 6.5
+        }
+      ],
+      "impacted_artifact": {
+        "type": "maven",
+        "name": "org.springframework:spring-webmvc",
+        "group": "org.springframework",
+        "artifact": "spring-webmvc",
+        "version": "5.2.9.RELEASE"
+      },
+      "fixed_versions": [
+        "5.2.9"
+      ],
+      "version_source": "spring-boot parent",
+      "component_path": "northgate-ratings-platform:ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-0C69FA656E60D86B",
+      "severity": "Medium",
+      "type": "security",
+      "summary": "SpEL expression denial of service.",
+      "cves": [
+        {
+          "cve": "CVE-2023-20863",
+          "cvss_v3_score": 5.3
+        }
+      ],
+      "impacted_artifact": {
+        "type": "maven",
+        "name": "org.springframework:spring-expression",
+        "group": "org.springframework",
+        "artifact": "spring-expression",
+        "version": "5.2.9.RELEASE"
+      },
+      "fixed_versions": [
+        "5.3.27"
+      ],
+      "version_source": "spring-boot parent",
+      "component_path": "northgate-ratings-platform:ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-A4EFE11947F80F27",
+      "severity": "Critical",
+      "type": "security",
+      "summary": "Polymorphic typing gadget in hikari-config allows deserialization attack.",
+      "cves": [
+        {
+          "cve": "CVE-2019-14540",
+          "cvss_v3_score": 9.8
+        }
+      ],
+      "impacted_artifact": {
+        "type": "maven",
+        "name": "com.fasterxml.jackson.core:jackson-databind",
+        "group": "com.fasterxml.jackson.core",
+        "artifact": "jackson-databind",
+        "version": "2.9.10"
+      },
+      "fixed_versions": [
+        "2.9.10.1"
+      ],
+      "version_source": "jackson-bom.version",
+      "component_path": "northgate-ratings-platform:ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-4C90A2AFEE3D0D0A",
+      "severity": "Critical",
+      "type": "security",
+      "summary": "Polymorphic typing gadget in HikariDataSource.",
+      "cves": [
+        {
+          "cve": "CVE-2019-16335",
+          "cvss_v3_score": 9.8
+        }
+      ],
+      "impacted_artifact": {
+        "type": "maven",
+        "name": "com.fasterxml.jackson.core:jackson-databind",
+        "group": "com.fasterxml.jackson.core",
+        "artifact": "jackson-databind",
+        "version": "2.9.10"
+      },
+      "fixed_versions": [
+        "2.9.10.1"
+      ],
+      "version_source": "jackson-bom.version",
+      "component_path": "northgate-ratings-platform:ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-3CFD97EEE9123C04",
+      "severity": "High",
+      "type": "security",
+      "summary": "Polymorphic typing gadget in ehcache.",
+      "cves": [
+        {
+          "cve": "CVE-2019-17267",
+          "cvss_v3_score": 8.1
+        }
+      ],
+      "impacted_artifact": {
+        "type": "maven",
+        "name": "com.fasterxml.jackson.core:jackson-databind",
+        "group": "com.fasterxml.jackson.core",
+        "artifact": "jackson-databind",
+        "version": "2.9.10"
+      },
+      "fixed_versions": [
+        "2.9.10.1"
+      ],
+      "version_source": "jackson-bom.version",
+      "component_path": "northgate-ratings-platform:ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-1ADDAF0FBA665708",
+      "severity": "Critical",
+      "type": "security",
+      "summary": "Polymorphic typing gadget in xbean-reflect.",
+      "cves": [
+        {
+          "cve": "CVE-2020-8840",
+          "cvss_v3_score": 9.8
+        }
+      ],
+      "impacted_artifact": {
+        "type": "maven",
+        "name": "com.fasterxml.jackson.core:jackson-databind",
+        "group": "com.fasterxml.jackson.core",
+        "artifact": "jackson-databind",
+        "version": "2.9.10"
+      },
+      "fixed_versions": [
+        "2.9.10.3"
+      ],
+      "version_source": "jackson-bom.version",
+      "component_path": "northgate-ratings-platform:ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-0ED5536592B2C383",
+      "severity": "Critical",
+      "type": "security",
+      "summary": "Polymorphic typing gadget in shaded-hikari-config.",
+      "cves": [
+        {
+          "cve": "CVE-2020-9546",
+          "cvss_v3_score": 9.8
+        }
+      ],
+      "impacted_artifact": {
+        "type": "maven",
+        "name": "com.fasterxml.jackson.core:jackson-databind",
+        "group": "com.fasterxml.jackson.core",
+        "artifact": "jackson-databind",
+        "version": "2.9.10"
+      },
+      "fixed_versions": [
+        "2.9.10.4"
+      ],
+      "version_source": "jackson-bom.version",
+      "component_path": "northgate-ratings-platform:ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-BF67F6F1866CA573",
+      "severity": "Critical",
+      "type": "security",
+      "summary": "Polymorphic typing gadget in ignite-jta.",
+      "cves": [
+        {
+          "cve": "CVE-2020-10650",
+          "cvss_v3_score": 9.8
+        }
+      ],
+      "impacted_artifact": {
+        "type": "maven",
+        "name": "com.fasterxml.jackson.core:jackson-databind",
+        "group": "com.fasterxml.jackson.core",
+        "artifact": "jackson-databind",
+        "version": "2.9.10"
+      },
+      "fixed_versions": [
+        "2.9.10.4"
+      ],
+      "version_source": "jackson-bom.version",
+      "component_path": "northgate-ratings-platform:ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-49F242154C3D89CC",
+      "severity": "High",
+      "type": "security",
+      "summary": "Deeply nested input causes stack exhaustion.",
+      "cves": [
+        {
+          "cve": "CVE-2020-36518",
+          "cvss_v3_score": 7.5
+        }
+      ],
+      "impacted_artifact": {
+        "type": "maven",
+        "name": "com.fasterxml.jackson.core:jackson-databind",
+        "group": "com.fasterxml.jackson.core",
+        "artifact": "jackson-databind",
+        "version": "2.9.10"
+      },
+      "fixed_versions": [
+        "2.12.6"
+      ],
+      "version_source": "jackson-bom.version",
+      "component_path": "northgate-ratings-platform:ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-6B908B81875DD9C1",
+      "severity": "High",
+      "type": "security",
+      "summary": "Polymorphic typing gadget in jackson-databind default typing.",
+      "cves": [
+        {
+          "cve": "CVE-2021-20190",
+          "cvss_v3_score": 8.1
+        }
+      ],
+      "impacted_artifact": {
+        "type": "maven",
+        "name": "com.fasterxml.jackson.core:jackson-databind",
+        "group": "com.fasterxml.jackson.core",
+        "artifact": "jackson-databind",
+        "version": "2.9.10"
+      },
+      "fixed_versions": [
+        "2.9.10.7"
+      ],
+      "version_source": "jackson-bom.version",
+      "component_path": "northgate-ratings-platform:ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-2D94C35A1F4D7435",
+      "severity": "Critical",
+      "type": "security",
+      "summary": "InvokerTransformer allows remote code execution during deserialization.",
+      "cves": [
+        {
+          "cve": "CVE-2015-6420",
+          "cvss_v3_score": 9.8
+        }
+      ],
+      "impacted_artifact": {
+        "type": "maven",
+        "name": "commons-collections:commons-collections",
+        "group": "commons-collections",
+        "artifact": "commons-collections",
+        "version": "3.2.1"
+      },
+      "fixed_versions": [
+        "3.2.2"
+      ],
+      "version_source": "commons-collections.version",
+      "component_path": "northgate-ratings-platform:ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-812587C77E66899C",
+      "severity": "Critical",
+      "type": "security",
+      "summary": "Unsafe deserialization gadget chain reachable through Java serialization.",
+      "cves": [
+        {
+          "cve": "CVE-2017-15708",
+          "cvss_v3_score": 9.8
+        }
+      ],
+      "impacted_artifact": {
+        "type": "maven",
+        "name": "commons-collections:commons-collections",
+        "group": "commons-collections",
+        "artifact": "commons-collections",
+        "version": "3.2.1"
+      },
+      "fixed_versions": [
+        "3.2.2"
+      ],
+      "version_source": "commons-collections.version",
+      "component_path": "northgate-ratings-platform:ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-3BE140389DF11CDE",
+      "severity": "Critical",
+      "type": "security",
+      "summary": "DiskFileItem allows remote code execution during deserialization.",
+      "cves": [
+        {
+          "cve": "CVE-2016-1000031",
+          "cvss_v3_score": 9.8
+        }
+      ],
+      "impacted_artifact": {
+        "type": "maven",
+        "name": "commons-fileupload:commons-fileupload",
+        "group": "commons-fileupload",
+        "artifact": "commons-fileupload",
+        "version": "1.3.2"
+      },
+      "fixed_versions": [
+        "1.3.3"
+      ],
+      "version_source": "commons-fileupload.version",
+      "component_path": "northgate-ratings-platform:ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-EC6CC91DF3E65BDC",
+      "severity": "High",
+      "type": "security",
+      "summary": "Unlimited number of request parts causes denial of service.",
+      "cves": [
+        {
+          "cve": "CVE-2023-24998",
+          "cvss_v3_score": 7.5
+        }
+      ],
+      "impacted_artifact": {
+        "type": "maven",
+        "name": "commons-fileupload:commons-fileupload",
+        "group": "commons-fileupload",
+        "artifact": "commons-fileupload",
+        "version": "1.3.2"
+      },
+      "fixed_versions": [
+        "1.5"
+      ],
+      "version_source": "commons-fileupload.version",
+      "component_path": "northgate-ratings-platform:ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-709C0B5B693EC836",
+      "severity": "Medium",
+      "type": "security",
+      "summary": "Unbounded memory allocation in AtomicDoubleArray deserialization.",
+      "cves": [
+        {
+          "cve": "CVE-2018-10237",
+          "cvss_v3_score": 5.9
+        }
+      ],
+      "impacted_artifact": {
+        "type": "maven",
+        "name": "com.google.guava:guava",
+        "group": "com.google.guava",
+        "artifact": "guava",
+        "version": "24.1-jre"
+      },
+      "fixed_versions": [
+        "24.1.1-jre"
+      ],
+      "version_source": "guava.version",
+      "component_path": "northgate-ratings-platform:ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-F598C23207F19E1F",
+      "severity": "Low",
+      "type": "security",
+      "summary": "Files.createTempDir creates a world readable directory.",
+      "cves": [
+        {
+          "cve": "CVE-2020-8908",
+          "cvss_v3_score": 3.3
+        }
+      ],
+      "impacted_artifact": {
+        "type": "maven",
+        "name": "com.google.guava:guava",
+        "group": "com.google.guava",
+        "artifact": "guava",
+        "version": "24.1-jre"
+      },
+      "fixed_versions": [
+        "30.0-jre"
+      ],
+      "version_source": "guava.version",
+      "component_path": "northgate-ratings-platform:ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-98C516639DB292BB",
+      "severity": "High",
+      "type": "security",
+      "summary": "FileBackedOutputStream writes to a world readable temporary directory.",
+      "cves": [
+        {
+          "cve": "CVE-2023-2976",
+          "cvss_v3_score": 7.1
+        }
+      ],
+      "impacted_artifact": {
+        "type": "maven",
+        "name": "com.google.guava:guava",
+        "group": "com.google.guava",
+        "artifact": "guava",
+        "version": "24.1-jre"
+      },
+      "fixed_versions": [
+        "32.0.0-jre"
+      ],
+      "version_source": "guava.version",
+      "component_path": "northgate-ratings-platform:ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-EB4C3B3092D964E5",
+      "severity": "Medium",
+      "type": "security",
+      "summary": "Misinterpretation of malformed authority component in request URIs.",
+      "cves": [
+        {
+          "cve": "CVE-2020-13956",
+          "cvss_v3_score": 5.3
+        }
+      ],
+      "impacted_artifact": {
+        "type": "maven",
+        "name": "org.apache.httpcomponents:httpclient",
+        "group": "org.apache.httpcomponents",
+        "artifact": "httpclient",
+        "version": "4.5.5"
+      },
+      "fixed_versions": [
+        "4.5.13"
+      ],
+      "version_source": "httpclient.version",
+      "component_path": "northgate-ratings-platform:ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-10A317932B82C6D2",
+      "severity": "Medium",
+      "type": "security",
+      "summary": "HTTP/2 request mix-up between streams.",
+      "cves": [
+        {
+          "cve": "CVE-2020-13943",
+          "cvss_v3_score": 4.3
+        }
+      ],
+      "impacted_artifact": {
+        "type": "maven",
+        "name": "org.apache.tomcat.embed:tomcat-embed-core",
+        "group": "org.apache.tomcat.embed",
+        "artifact": "tomcat-embed-core",
+        "version": "9.0.38"
+      },
+      "fixed_versions": [
+        "9.0.39"
+      ],
+      "version_source": "spring-boot parent",
+      "component_path": "northgate-ratings-platform:ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-A0A3012F26CCDA8B",
+      "severity": "High",
+      "type": "security",
+      "summary": "Request mix-up when h2c direct connection upgrade is used.",
+      "cves": [
+        {
+          "cve": "CVE-2021-25122",
+          "cvss_v3_score": 7.5
+        }
+      ],
+      "impacted_artifact": {
+        "type": "maven",
+        "name": "org.apache.tomcat.embed:tomcat-embed-core",
+        "group": "org.apache.tomcat.embed",
+        "artifact": "tomcat-embed-core",
+        "version": "9.0.38"
+      },
+      "fixed_versions": [
+        "9.0.43"
+      ],
+      "version_source": "spring-boot parent",
+      "component_path": "northgate-ratings-platform:ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-873B4462520D6611",
+      "severity": "High",
+      "type": "security",
+      "summary": "Request smuggling when rejectIllegalHeader is false.",
+      "cves": [
+        {
+          "cve": "CVE-2022-42252",
+          "cvss_v3_score": 7.5
+        }
+      ],
+      "impacted_artifact": {
+        "type": "maven",
+        "name": "org.apache.tomcat.embed:tomcat-embed-core",
+        "group": "org.apache.tomcat.embed",
+        "artifact": "tomcat-embed-core",
+        "version": "9.0.38"
+      },
+      "fixed_versions": [
+        "9.0.68"
+      ],
+      "version_source": "spring-boot parent",
+      "component_path": "northgate-ratings-platform:ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-437A631ED0EA6C81",
+      "severity": "Critical",
+      "type": "security",
+      "summary": "SnakeYaml constructor allows remote code execution on untrusted input.",
+      "cves": [
+        {
+          "cve": "CVE-2022-1471",
+          "cvss_v3_score": 9.8
+        }
+      ],
+      "impacted_artifact": {
+        "type": "maven",
+        "name": "org.yaml:snakeyaml",
+        "group": "org.yaml",
+        "artifact": "snakeyaml",
+        "version": "1.26"
+      },
+      "fixed_versions": [
+        "2.0"
+      ],
+      "version_source": "spring-boot parent",
+      "component_path": "northgate-ratings-platform:ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-F33E14607A8B3AA5",
+      "severity": "Critical",
+      "type": "security",
+      "summary": "JNDI in the H2 console allows remote code execution.",
+      "cves": [
+        {
+          "cve": "CVE-2021-42392",
+          "cvss_v3_score": 9.8
+        }
+      ],
+      "impacted_artifact": {
+        "type": "maven",
+        "name": "com.h2database:h2",
+        "group": "com.h2database",
+        "artifact": "h2",
+        "version": "1.4.200"
+      },
+      "fixed_versions": [
+        "2.0.206"
+      ],
+      "version_source": "spring-boot parent",
+      "component_path": "northgate-ratings-platform:ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-965FC98814DFC6FF",
+      "severity": "High",
+      "type": "security",
+      "summary": "openssl 1.1.1d-0+deb10u3 is affected by CVE-2022-0778.",
+      "cves": [
+        {
+          "cve": "CVE-2022-0778",
+          "cvss_v3_score": 7.5
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "openssl",
+        "version": "1.1.1d-0+deb10u3",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-0D444F09FD5D96A1",
+      "severity": "Critical",
+      "type": "security",
+      "summary": "openssl 1.1.1d-0+deb10u3 is affected by CVE-2021-3711.",
+      "cves": [
+        {
+          "cve": "CVE-2021-3711",
+          "cvss_v3_score": 9.8
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "openssl",
+        "version": "1.1.1d-0+deb10u3",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-9C69F5FC89AEAD5E",
+      "severity": "High",
+      "type": "security",
+      "summary": "openssl 1.1.1d-0+deb10u3 is affected by CVE-2021-3712.",
+      "cves": [
+        {
+          "cve": "CVE-2021-3712",
+          "cvss_v3_score": 7.4
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "openssl",
+        "version": "1.1.1d-0+deb10u3",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-B7DFDF0888D08D0F",
+      "severity": "Critical",
+      "type": "security",
+      "summary": "libssl1.1 1.1.1d-0+deb10u3 is affected by CVE-2022-1292.",
+      "cves": [
+        {
+          "cve": "CVE-2022-1292",
+          "cvss_v3_score": 9.8
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "libssl1.1",
+        "version": "1.1.1d-0+deb10u3",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-4B38EEA39EC0BF0B",
+      "severity": "High",
+      "type": "security",
+      "summary": "libssl1.1 1.1.1d-0+deb10u3 is affected by CVE-2023-0286.",
+      "cves": [
+        {
+          "cve": "CVE-2023-0286",
+          "cvss_v3_score": 7.4
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "libssl1.1",
+        "version": "1.1.1d-0+deb10u3",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-C8E75D9393931F53",
+      "severity": "Critical",
+      "type": "security",
+      "summary": "libc6 2.28-10 is affected by CVE-2021-33574.",
+      "cves": [
+        {
+          "cve": "CVE-2021-33574",
+          "cvss_v3_score": 9.8
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "libc6",
+        "version": "2.28-10",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-6B2904323B16C182",
+      "severity": "High",
+      "type": "security",
+      "summary": "libc6 2.28-10 is affected by CVE-2021-35942.",
+      "cves": [
+        {
+          "cve": "CVE-2021-35942",
+          "cvss_v3_score": 9.1
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "libc6",
+        "version": "2.28-10",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-F3205DC5CC23BB70",
+      "severity": "Critical",
+      "type": "security",
+      "summary": "libc6 2.28-10 is affected by CVE-2022-23219.",
+      "cves": [
+        {
+          "cve": "CVE-2022-23219",
+          "cvss_v3_score": 9.8
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "libc6",
+        "version": "2.28-10",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-9A6A5077E9BDC94A",
+      "severity": "High",
+      "type": "security",
+      "summary": "libc6 2.28-10 is affected by CVE-2023-4911.",
+      "cves": [
+        {
+          "cve": "CVE-2023-4911",
+          "cvss_v3_score": 7.8
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "libc6",
+        "version": "2.28-10",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-7A9F11376E7DF04D",
+      "severity": "High",
+      "type": "security",
+      "summary": "libc-bin 2.28-10 is affected by CVE-2021-3999.",
+      "cves": [
+        {
+          "cve": "CVE-2021-3999",
+          "cvss_v3_score": 7.8
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "libc-bin",
+        "version": "2.28-10",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-E06D925908AAA599",
+      "severity": "High",
+      "type": "security",
+      "summary": "glibc 2.28-10 is affected by CVE-2020-1751.",
+      "cves": [
+        {
+          "cve": "CVE-2020-1751",
+          "cvss_v3_score": 7.0
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "glibc",
+        "version": "2.28-10",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-FE413D7004ADA4DC",
+      "severity": "High",
+      "type": "security",
+      "summary": "zlib1g 1:1.2.11.dfsg-1 is affected by CVE-2018-25032.",
+      "cves": [
+        {
+          "cve": "CVE-2018-25032",
+          "cvss_v3_score": 7.5
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "zlib1g",
+        "version": "1:1.2.11.dfsg-1",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-1CBB3273F979C326",
+      "severity": "Critical",
+      "type": "security",
+      "summary": "zlib1g 1:1.2.11.dfsg-1 is affected by CVE-2022-37434.",
+      "cves": [
+        {
+          "cve": "CVE-2022-37434",
+          "cvss_v3_score": 9.8
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "zlib1g",
+        "version": "1:1.2.11.dfsg-1",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-1FCF9A5FCBEAB469",
+      "severity": "High",
+      "type": "security",
+      "summary": "bash 5.0-4 is affected by CVE-2019-18276.",
+      "cves": [
+        {
+          "cve": "CVE-2019-18276",
+          "cvss_v3_score": 7.8
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "bash",
+        "version": "5.0-4",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-8FFF132C3BBE72F0",
+      "severity": "Medium",
+      "type": "security",
+      "summary": "bash 5.0-4 is affected by CVE-2022-3715.",
+      "cves": [
+        {
+          "cve": "CVE-2022-3715",
+          "cvss_v3_score": 5.5
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "bash",
+        "version": "5.0-4",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-6D5C92C0A895F30A",
+      "severity": "High",
+      "type": "security",
+      "summary": "curl 7.64.0-4+deb10u1 is affected by CVE-2021-22946.",
+      "cves": [
+        {
+          "cve": "CVE-2021-22946",
+          "cvss_v3_score": 7.5
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "curl",
+        "version": "7.64.0-4+deb10u1",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-21AD99FC6C55A987",
+      "severity": "Critical",
+      "type": "security",
+      "summary": "curl 7.64.0-4+deb10u1 is affected by CVE-2022-32221.",
+      "cves": [
+        {
+          "cve": "CVE-2022-32221",
+          "cvss_v3_score": 9.8
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "curl",
+        "version": "7.64.0-4+deb10u1",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-64F65030714EB763",
+      "severity": "High",
+      "type": "security",
+      "summary": "libcurl4 7.64.0-4+deb10u1 is affected by CVE-2023-27536.",
+      "cves": [
+        {
+          "cve": "CVE-2023-27536",
+          "cvss_v3_score": 7.5
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "libcurl4",
+        "version": "7.64.0-4+deb10u1",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-3C36BB236C625B7F",
+      "severity": "Critical",
+      "type": "security",
+      "summary": "libcurl4 7.64.0-4+deb10u1 is affected by CVE-2023-38545.",
+      "cves": [
+        {
+          "cve": "CVE-2023-38545",
+          "cvss_v3_score": 9.8
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "libcurl4",
+        "version": "7.64.0-4+deb10u1",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-5640A6DE3ADCF50A",
+      "severity": "High",
+      "type": "security",
+      "summary": "libxml2 2.9.4+dfsg1-7+b3 is affected by CVE-2022-40303.",
+      "cves": [
+        {
+          "cve": "CVE-2022-40303",
+          "cvss_v3_score": 7.5
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "libxml2",
+        "version": "2.9.4+dfsg1-7+b3",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-C9E9CC5AEF7810E5",
+      "severity": "High",
+      "type": "security",
+      "summary": "libxml2 2.9.4+dfsg1-7+b3 is affected by CVE-2022-40304.",
+      "cves": [
+        {
+          "cve": "CVE-2022-40304",
+          "cvss_v3_score": 7.5
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "libxml2",
+        "version": "2.9.4+dfsg1-7+b3",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-F5AECBEF7112696E",
+      "severity": "High",
+      "type": "security",
+      "summary": "libxml2 2.9.4+dfsg1-7+b3 is affected by CVE-2021-3517.",
+      "cves": [
+        {
+          "cve": "CVE-2021-3517",
+          "cvss_v3_score": 8.6
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "libxml2",
+        "version": "2.9.4+dfsg1-7+b3",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-B0EEE6A5C753BA3B",
+      "severity": "High",
+      "type": "security",
+      "summary": "libxml2 2.9.4+dfsg1-7+b3 is affected by CVE-2021-3518.",
+      "cves": [
+        {
+          "cve": "CVE-2021-3518",
+          "cvss_v3_score": 8.8
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "libxml2",
+        "version": "2.9.4+dfsg1-7+b3",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-2CAA8B96AA75224D",
+      "severity": "High",
+      "type": "security",
+      "summary": "perl 5.28.1-6 is affected by CVE-2020-10543.",
+      "cves": [
+        {
+          "cve": "CVE-2020-10543",
+          "cvss_v3_score": 8.2
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "perl",
+        "version": "5.28.1-6",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-3469A2D62A2E760C",
+      "severity": "High",
+      "type": "security",
+      "summary": "perl 5.28.1-6 is affected by CVE-2020-10878.",
+      "cves": [
+        {
+          "cve": "CVE-2020-10878",
+          "cvss_v3_score": 8.6
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "perl",
+        "version": "5.28.1-6",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-DB1EF44E90BA4669",
+      "severity": "High",
+      "type": "security",
+      "summary": "perl-base 5.28.1-6 is affected by CVE-2020-12723.",
+      "cves": [
+        {
+          "cve": "CVE-2020-12723",
+          "cvss_v3_score": 7.5
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "perl-base",
+        "version": "5.28.1-6",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-7290280931B21976",
+      "severity": "High",
+      "type": "security",
+      "summary": "apt 1.8.2.1 is affected by CVE-2020-27350.",
+      "cves": [
+        {
+          "cve": "CVE-2020-27350",
+          "cvss_v3_score": 7.8
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "apt",
+        "version": "1.8.2.1",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-57B331127F77A2AB",
+      "severity": "Medium",
+      "type": "security",
+      "summary": "apt 1.8.2.1 is affected by CVE-2020-3810.",
+      "cves": [
+        {
+          "cve": "CVE-2020-3810",
+          "cvss_v3_score": 6.4
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "apt",
+        "version": "1.8.2.1",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-0430817B04570F15",
+      "severity": "High",
+      "type": "security",
+      "summary": "systemd 241-7~deb10u4 is affected by CVE-2021-33910.",
+      "cves": [
+        {
+          "cve": "CVE-2021-33910",
+          "cvss_v3_score": 7.5
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "systemd",
+        "version": "241-7~deb10u4",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-E6C5B4443F478EE8",
+      "severity": "Medium",
+      "type": "security",
+      "summary": "systemd 241-7~deb10u4 is affected by CVE-2022-3821.",
+      "cves": [
+        {
+          "cve": "CVE-2022-3821",
+          "cvss_v3_score": 5.5
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "systemd",
+        "version": "241-7~deb10u4",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-2C03883916C4ECC0",
+      "severity": "High",
+      "type": "security",
+      "summary": "libsystemd0 241-7~deb10u4 is affected by CVE-2023-26604.",
+      "cves": [
+        {
+          "cve": "CVE-2023-26604",
+          "cvss_v3_score": 7.8
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "libsystemd0",
+        "version": "241-7~deb10u4",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-DC047B3A1D334240",
+      "severity": "Medium",
+      "type": "security",
+      "summary": "tar 1.30+dfsg-6 is affected by CVE-2021-20193.",
+      "cves": [
+        {
+          "cve": "CVE-2021-20193",
+          "cvss_v3_score": 5.5
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "tar",
+        "version": "1.30+dfsg-6",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-942C381F92F482B8",
+      "severity": "High",
+      "type": "security",
+      "summary": "gzip 1.9-3 is affected by CVE-2022-1271.",
+      "cves": [
+        {
+          "cve": "CVE-2022-1271",
+          "cvss_v3_score": 8.8
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "gzip",
+        "version": "1.9-3",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-DA131937FCCEDDF6",
+      "severity": "High",
+      "type": "security",
+      "summary": "e2fsprogs 1.44.5-1+deb10u3 is affected by CVE-2022-1304.",
+      "cves": [
+        {
+          "cve": "CVE-2022-1304",
+          "cvss_v3_score": 7.8
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "e2fsprogs",
+        "version": "1.44.5-1+deb10u3",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-4E72601661E8DDF6",
+      "severity": "Medium",
+      "type": "security",
+      "summary": "libcom-err2 1.44.5-1+deb10u3 is affected by CVE-2019-5094.",
+      "cves": [
+        {
+          "cve": "CVE-2019-5094",
+          "cvss_v3_score": 5.5
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "libcom-err2",
+        "version": "1.44.5-1+deb10u3",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-C754AB7B0EB210E8",
+      "severity": "High",
+      "type": "security",
+      "summary": "krb5-locales 1.17-3 is affected by CVE-2021-36222.",
+      "cves": [
+        {
+          "cve": "CVE-2021-36222",
+          "cvss_v3_score": 7.5
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "krb5-locales",
+        "version": "1.17-3",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-5E92A3D7FA980C6A",
+      "severity": "High",
+      "type": "security",
+      "summary": "libk5crypto3 1.17-3 is affected by CVE-2022-42898.",
+      "cves": [
+        {
+          "cve": "CVE-2022-42898",
+          "cvss_v3_score": 8.8
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "libk5crypto3",
+        "version": "1.17-3",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-42D03C61B87EF49D",
+      "severity": "High",
+      "type": "security",
+      "summary": "libgssapi-krb5-2 1.17-3 is affected by CVE-2023-36054.",
+      "cves": [
+        {
+          "cve": "CVE-2023-36054",
+          "cvss_v3_score": 7.5
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "libgssapi-krb5-2",
+        "version": "1.17-3",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-FA8C5B86D5B88A21",
+      "severity": "Medium",
+      "type": "security",
+      "summary": "libgcrypt20 1.8.4-5 is affected by CVE-2021-40528.",
+      "cves": [
+        {
+          "cve": "CVE-2021-40528",
+          "cvss_v3_score": 5.9
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "libgcrypt20",
+        "version": "1.8.4-5",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-D761171410C53C47",
+      "severity": "Critical",
+      "type": "security",
+      "summary": "libgnutls30 3.6.7-4+deb10u6 is affected by CVE-2021-20231.",
+      "cves": [
+        {
+          "cve": "CVE-2021-20231",
+          "cvss_v3_score": 9.8
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "libgnutls30",
+        "version": "3.6.7-4+deb10u6",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-F496F295807A4E92",
+      "severity": "Critical",
+      "type": "security",
+      "summary": "libgnutls30 3.6.7-4+deb10u6 is affected by CVE-2021-20232.",
+      "cves": [
+        {
+          "cve": "CVE-2021-20232",
+          "cvss_v3_score": 9.8
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "libgnutls30",
+        "version": "3.6.7-4+deb10u6",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-C4DF360E0AA65E53",
+      "severity": "Medium",
+      "type": "security",
+      "summary": "libsqlite3-0 3.27.2-3 is affected by CVE-2020-13435.",
+      "cves": [
+        {
+          "cve": "CVE-2020-13435",
+          "cvss_v3_score": 5.5
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "libsqlite3-0",
+        "version": "3.27.2-3",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-916FB06FE03C96D2",
+      "severity": "Critical",
+      "type": "security",
+      "summary": "libexpat1 2.2.6-2 is affected by CVE-2022-25235.",
+      "cves": [
+        {
+          "cve": "CVE-2022-25235",
+          "cvss_v3_score": 9.8
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "libexpat1",
+        "version": "2.2.6-2",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-D142CB0C85BFCA29",
+      "severity": "Critical",
+      "type": "security",
+      "summary": "libexpat1 2.2.6-2 is affected by CVE-2022-25236.",
+      "cves": [
+        {
+          "cve": "CVE-2022-25236",
+          "cvss_v3_score": 9.8
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "libexpat1",
+        "version": "2.2.6-2",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-416007C00DA84DE3",
+      "severity": "Critical",
+      "type": "security",
+      "summary": "libexpat1 2.2.6-2 is affected by CVE-2022-40674.",
+      "cves": [
+        {
+          "cve": "CVE-2022-40674",
+          "cvss_v3_score": 9.8
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "libexpat1",
+        "version": "2.2.6-2",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-F4B0A9B9CECAF36A",
+      "severity": "High",
+      "type": "security",
+      "summary": "libncursesw6 6.1+20181013-2 is affected by CVE-2021-39537.",
+      "cves": [
+        {
+          "cve": "CVE-2021-39537",
+          "cvss_v3_score": 7.8
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "libncursesw6",
+        "version": "6.1+20181013-2",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-E18A927EE9315DEF",
+      "severity": "High",
+      "type": "security",
+      "summary": "libtinfo6 6.1+20181013-2 is affected by CVE-2022-29458.",
+      "cves": [
+        {
+          "cve": "CVE-2022-29458",
+          "cvss_v3_score": 7.1
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "libtinfo6",
+        "version": "6.1+20181013-2",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-51D5B3246DB798CA",
+      "severity": "High",
+      "type": "security",
+      "summary": "libssh2-1 1.8.0-2.1 is affected by CVE-2019-17498.",
+      "cves": [
+        {
+          "cve": "CVE-2019-17498",
+          "cvss_v3_score": 8.1
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "libssh2-1",
+        "version": "1.8.0-2.1",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-404F7CA3A92934BD",
+      "severity": "High",
+      "type": "security",
+      "summary": "libnettle6 3.4.1-1 is affected by CVE-2021-3580.",
+      "cves": [
+        {
+          "cve": "CVE-2021-3580",
+          "cvss_v3_score": 7.5
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "libnettle6",
+        "version": "3.4.1-1",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-18C3AFC9ADDA963F",
+      "severity": "Critical",
+      "type": "security",
+      "summary": "libldap-2.4-2 2.4.47+dfsg-3+deb10u2 is affected by CVE-2020-36230.",
+      "cves": [
+        {
+          "cve": "CVE-2020-36230",
+          "cvss_v3_score": 9.1
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "libldap-2.4-2",
+        "version": "2.4.47+dfsg-3+deb10u2",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-84EFEDA6F42E7FE7",
+      "severity": "Critical",
+      "type": "security",
+      "summary": "libldap-2.4-2 2.4.47+dfsg-3+deb10u2 is affected by CVE-2022-29155.",
+      "cves": [
+        {
+          "cve": "CVE-2022-29155",
+          "cvss_v3_score": 9.8
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "libldap-2.4-2",
+        "version": "2.4.47+dfsg-3+deb10u2",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-B54ED01FD1CB3A6C",
+      "severity": "Medium",
+      "type": "security",
+      "summary": "libpcre3 2:8.39-12 is affected by CVE-2020-14155.",
+      "cves": [
+        {
+          "cve": "CVE-2020-14155",
+          "cvss_v3_score": 5.3
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "libpcre3",
+        "version": "2:8.39-12",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-125EE946134A7227",
+      "severity": "High",
+      "type": "security",
+      "summary": "login 1:4.5-1.1 is affected by CVE-2019-19882.",
+      "cves": [
+        {
+          "cve": "CVE-2019-19882",
+          "cvss_v3_score": 7.8
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "login",
+        "version": "1:4.5-1.1",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-625E1D8E9C968DBC",
+      "severity": "Medium",
+      "type": "security",
+      "summary": "passwd 1:4.5-1.1 is affected by CVE-2023-4641.",
+      "cves": [
+        {
+          "cve": "CVE-2023-4641",
+          "cvss_v3_score": 5.5
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "passwd",
+        "version": "1:4.5-1.1",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-F9C51B6FE33E0AC9",
+      "severity": "Medium",
+      "type": "security",
+      "summary": "util-linux 2.33.1-0.1 is affected by CVE-2021-37600.",
+      "cves": [
+        {
+          "cve": "CVE-2021-37600",
+          "cvss_v3_score": 5.5
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "util-linux",
+        "version": "2.33.1-0.1",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-F8B0511037D82950",
+      "severity": "Critical",
+      "type": "security",
+      "summary": "libtasn1-6 4.13-3 is affected by CVE-2021-46848.",
+      "cves": [
+        {
+          "cve": "CVE-2021-46848",
+          "cvss_v3_score": 9.1
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "libtasn1-6",
+        "version": "4.13-3",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-584CF266AC1D34E0",
+      "severity": "High",
+      "type": "security",
+      "summary": "libidn2-0 2.0.5-1+deb10u1 is affected by CVE-2019-12290.",
+      "cves": [
+        {
+          "cve": "CVE-2019-12290",
+          "cvss_v3_score": 8.1
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "libidn2-0",
+        "version": "2.0.5-1+deb10u1",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-7DDC3C1BD7D90807",
+      "severity": "Medium",
+      "type": "security",
+      "summary": "binutils 2.31.1-16 is affected by CVE-2021-20197.",
+      "cves": [
+        {
+          "cve": "CVE-2021-20197",
+          "cvss_v3_score": 6.3
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "binutils",
+        "version": "2.31.1-16",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-D856008D3C78E320",
+      "severity": "High",
+      "type": "security",
+      "summary": "gcc-8-base 8.3.0-6 is affected by CVE-2018-12886.",
+      "cves": [
+        {
+          "cve": "CVE-2018-12886",
+          "cvss_v3_score": 8.1
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "gcc-8-base",
+        "version": "8.3.0-6",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-E11DBC7AEE9B8951",
+      "severity": "High",
+      "type": "security",
+      "summary": "git 1:2.20.1-2+deb10u3 is affected by CVE-2022-24765.",
+      "cves": [
+        {
+          "cve": "CVE-2022-24765",
+          "cvss_v3_score": 7.8
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "git",
+        "version": "1:2.20.1-2+deb10u3",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-D7C3F08B29E1696A",
+      "severity": "High",
+      "type": "security",
+      "summary": "git 1:2.20.1-2+deb10u3 is affected by CVE-2023-25652.",
+      "cves": [
+        {
+          "cve": "CVE-2023-25652",
+          "cvss_v3_score": 7.5
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "git",
+        "version": "1:2.20.1-2+deb10u3",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-75AECDDA4B74DDF6",
+      "severity": "Critical",
+      "type": "security",
+      "summary": "mercurial 4.8.2-1 is affected by CVE-2022-24070.",
+      "cves": [
+        {
+          "cve": "CVE-2022-24070",
+          "cvss_v3_score": 9.8
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "mercurial",
+        "version": "4.8.2-1",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-FB344D38FB6EBF64",
+      "severity": "High",
+      "type": "security",
+      "summary": "libfreetype6 2.9.1-3 is affected by CVE-2020-15999.",
+      "cves": [
+        {
+          "cve": "CVE-2020-15999",
+          "cvss_v3_score": 8.8
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "libfreetype6",
+        "version": "2.9.1-3",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-C98EA65A1601BC2B",
+      "severity": "High",
+      "type": "security",
+      "summary": "libpng16-16 1.6.36-6 is affected by CVE-2019-7317.",
+      "cves": [
+        {
+          "cve": "CVE-2019-7317",
+          "cvss_v3_score": 8.1
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "libpng16-16",
+        "version": "1.6.36-6",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-59CED1DC77C77E9C",
+      "severity": "High",
+      "type": "security",
+      "summary": "libtiff5 4.1.0+git191117-2 is affected by CVE-2022-0561.",
+      "cves": [
+        {
+          "cve": "CVE-2022-0561",
+          "cvss_v3_score": 7.5
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "libtiff5",
+        "version": "4.1.0+git191117-2",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-B5B40A5C2F15021E",
+      "severity": "Critical",
+      "type": "security",
+      "summary": "libglib2.0-0 2.58.3-2 is affected by CVE-2021-27219.",
+      "cves": [
+        {
+          "cve": "CVE-2021-27219",
+          "cvss_v3_score": 9.8
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "libglib2.0-0",
+        "version": "2.58.3-2",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    },
+    {
+      "issue_id": "XRAY-4D37800EAB436602",
+      "severity": "High",
+      "type": "security",
+      "summary": "openjdk-8-jdk-headless 8u242-b08-1~deb9u1 is affected by CVE-2022-21449.",
+      "cves": [
+        {
+          "cve": "CVE-2022-21449",
+          "cvss_v3_score": 7.5
+        }
+      ],
+      "impacted_artifact": {
+        "type": "debian",
+        "name": "openjdk-8-jdk-headless",
+        "version": "8u242-b08-1~deb9u1",
+        "distro": "debian:10"
+      },
+      "fixed_versions": [],
+      "version_source": "base image openjdk:8u282-jdk-buster",
+      "component_path": "docker://northgate/ratings-service:1.4.2"
+    }
+  ]
+}

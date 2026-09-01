@@ -1,0 +1,133 @@
+{
+  "paging": {
+    "pageIndex": 1,
+    "pageSize": 100,
+    "total": 7
+  },
+  "analysisDate": "2026-02-17T02:14:38Z",
+  "qualityGate": "Northgate Way",
+  "total": 7,
+  "issues": [
+    {
+      "key": "BDEC284477BD1DF2",
+      "rule": "java:S2245",
+      "severity": "CRITICAL",
+      "component": "northgate:ratings-service/src/main/java/com/northgate/ratings/crypto/LegacyDigest.java",
+      "project": "northgate",
+      "line": 23,
+      "message": "Make sure that using this pseudorandom number generator is safe here.",
+      "type": "VULNERABILITY",
+      "effort": "30min",
+      "tags": [
+        "cwe",
+        "owasp-a3"
+      ],
+      "creationDate": "2026-02-17T02:14:38Z",
+      "status": "OPEN"
+    },
+    {
+      "key": "689BFA54DBFDE90C",
+      "rule": "java:S2245",
+      "severity": "CRITICAL",
+      "component": "northgate:ratings-service/src/main/java/com/northgate/ratings/crypto/LegacyDigest.java",
+      "project": "northgate",
+      "line": 68,
+      "message": "Session identifiers are derived from java.util.Random.",
+      "type": "VULNERABILITY",
+      "effort": "30min",
+      "tags": [
+        "cwe",
+        "owasp-a3"
+      ],
+      "creationDate": "2026-02-17T02:14:38Z",
+      "status": "OPEN"
+    },
+    {
+      "key": "0C1D6607693FB44C",
+      "rule": "java:S1989",
+      "severity": "MAJOR",
+      "component": "northgate:ratings-service/src/main/java/com/northgate/ratings/config/ApiExceptionHandler.java",
+      "project": "northgate",
+      "line": 33,
+      "message": "Do not return a stack trace in an API response.",
+      "type": "VULNERABILITY",
+      "effort": "30min",
+      "tags": [
+        "cwe",
+        "owasp-a3",
+        "error-handling"
+      ],
+      "creationDate": "2026-02-17T02:14:38Z",
+      "status": "OPEN"
+    },
+    {
+      "key": "D4ABB4394AACA040",
+      "rule": "java:S4507",
+      "severity": "MINOR",
+      "component": "northgate:ratings-service/src/main/java/com/northgate/ratings/config/ApiExceptionHandler.java",
+      "project": "northgate",
+      "line": 32,
+      "message": "Make sure this debug feature is deactivated before delivering the code in production.",
+      "type": "CODE_SMELL",
+      "effort": "30min",
+      "tags": [
+        "cwe",
+        "owasp-a5"
+      ],
+      "creationDate": "2026-02-17T02:14:38Z",
+      "status": "OPEN"
+    },
+    {
+      "key": "F0CFAA6F6B0688F5",
+      "rule": "java:S3330",
+      "severity": "MAJOR",
+      "component": "northgate:ratings-service/src/main/java/com/northgate/ratings/controller/SessionController.java",
+      "project": "northgate",
+      "line": 40,
+      "message": "Add the \"HttpOnly\" attribute to this cookie.",
+      "type": "VULNERABILITY",
+      "effort": "30min",
+      "tags": [
+        "cwe",
+        "owasp-a3",
+        "privacy"
+      ],
+      "creationDate": "2026-02-17T02:14:38Z",
+      "status": "OPEN"
+    },
+    {
+      "key": "F28D046B2B470292",
+      "rule": "java:S3330",
+      "severity": "MAJOR",
+      "component": "northgate:ratings-service/src/main/resources/application.yml",
+      "project": "northgate",
+      "line": 6,
+      "message": "Session cookies are configured without HttpOnly.",
+      "type": "VULNERABILITY",
+      "effort": "30min",
+      "tags": [
+        "cwe",
+        "owasp-a3"
+      ],
+      "creationDate": "2026-02-17T02:14:38Z",
+      "status": "OPEN"
+    },
+    {
+      "key": "64B9FAF995258BB1",
+      "rule": "java:S2092",
+      "severity": "MAJOR",
+      "component": "northgate:ratings-service/src/main/resources/application.yml",
+      "project": "northgate",
+      "line": 7,
+      "message": "Session cookies are configured without the secure flag.",
+      "type": "VULNERABILITY",
+      "effort": "30min",
+      "tags": [
+        "cwe",
+        "owasp-a3"
+      ],
+      "creationDate": "2026-02-17T02:14:38Z",
+      "status": "OPEN"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ratings-service
+  namespace: northgate
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 32m
+    # The X-Internal-Admin header the authorization filter reads used to be set here by the
+    # old perimeter proxy, and is not set any more. The filter still assumes it. Nothing in
+    # the cluster supplies it and nothing strips it from an inbound request either, so a
+    # caller can send their own.
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: ratings.northgate.internal
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ratings-service
+                port:
+                  name: http

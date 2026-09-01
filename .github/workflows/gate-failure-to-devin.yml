@@ -1,0 +1,108 @@
+name: gate-failure-to-devin
+
+# Turns a failing security gate into one Devin session per failing condition.
+#
+# One condition per session is deliberate. A single session told to clear the whole gate
+# produces one pull request that changes authorization, cryptography and a base image at
+# once, and no reviewer can sign that off in one pass.
+#
+# Defaults to a dry run: the payloads are printed to the job summary and no session is
+# created. Set dry_run to false, or set the repository variable DEVIN_DISPATCH_LIVE to
+# "true", once you have looked at them.
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Print the payloads instead of creating sessions"
+        type: boolean
+        default: true
+  workflow_run:
+    workflows: ["build-and-gate"]
+    types: [completed]
+
+jobs:
+  fan-out:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'failure'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Evaluate the gate
+        id: gate
+        run: python3 security/gate_check.py --json > gate.json || true
+
+      - name: Build one session payload per failing condition
+        id: payloads
+        run: |
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import json, os
+
+          report = json.load(open("gate.json"))
+          repo = os.environ["GITHUB_REPOSITORY"]
+          playbook = os.environ.get("DEVIN_PLAYBOOK_ID", "finding-to-merged-pr")
+
+          sessions = []
+          for condition in report["conditions"]:
+              if condition["status"] != "fail":
+                  continue
+              sessions.append({
+                  "playbook_id": playbook,
+                  "title": "gate: {0}".format(condition["title"]),
+                  "prompt": (
+                      "The security gate condition '{id}' is failing on {repo}.\n\n"
+                      "{title}\n{detail}\n\n"
+                      "It accounts for {n} scanner findings in security/. Fix the root cause, "
+                      "keep the response contract for existing clients intact, add a test that "
+                      "fails before your change, and verify with `mvn -B clean verify` and "
+                      "`python3 security/gate_check.py`. Do not fix any other gate condition in "
+                      "this session."
+                  ).format(id=condition["id"], repo=repo, title=condition["title"],
+                           detail=condition["detail"], n=condition["findings_accounted_for"]),
+              })
+
+          print("count=%d" % len(sessions))
+          print("sessions<<EOF")
+          print(json.dumps(sessions, indent=2))
+          print("EOF")
+          PY
+        env:
+          DEVIN_PLAYBOOK_ID: ${{ vars.DEVIN_PLAYBOOK_ID }}
+
+      - name: Summarise
+        run: |
+          {
+            echo "### Devin sessions for failing gate conditions"
+            echo ""
+            echo "Failing conditions: ${{ steps.payloads.outputs.count }}"
+            echo ""
+            echo '```json'
+            cat <<'JSON'
+          ${{ steps.payloads.outputs.sessions }}
+          JSON
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Create the sessions
+        if: >
+          steps.payloads.outputs.count != '0' &&
+          ((github.event_name == 'workflow_dispatch' && inputs.dry_run == false) ||
+           (github.event_name == 'workflow_run' && vars.DEVIN_DISPATCH_LIVE == 'true'))
+        env:
+          DEVIN_API_KEY: ${{ secrets.DEVIN_API_KEY }}
+          SESSIONS: ${{ steps.payloads.outputs.sessions }}
+        run: |
+          if [ -z "$DEVIN_API_KEY" ]; then
+            echo "::error::DEVIN_API_KEY is not set. Add it as a repository secret."
+            exit 1
+          fi
+          echo "$SESSIONS" | jq -c '.[]' | while read -r session; do
+            curl -sS -X POST https://api.devin.ai/v1/sessions \
+              -H "Authorization: Bearer $DEVIN_API_KEY" \
+              -H "Content-Type: application/json" \
+              -d "$session" | jq -r '"created " + .url'
+          done

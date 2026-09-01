@@ -1,0 +1,54 @@
+{
+  "scanTime": "2026-02-17T02:14:38Z",
+  "results": [
+    {
+      "id": "sha256:1c9f2d3ab41d9d6f3fbb7c5b7a2d0c2b1a9e8f7d6c5b4a3928170615243f0e9d",
+      "name": "northgate/ratings-service:1.4.2",
+      "distro": "Debian GNU/Linux 10 (buster)",
+      "distroRelease": "buster",
+      "eolDate": "2024-06-30",
+      "baseImage": "openjdk:8u282-jdk-buster",
+      "runAsRoot": true,
+      "compliances": [
+        {
+          "id": "41",
+          "title": "Image should be created with a non-root user",
+          "severity": "high",
+          "description": "The image runs as root. No USER instruction is present in ratings-service/Dockerfile."
+        },
+        {
+          "id": "448",
+          "title": "Container images should not contain secrets",
+          "severity": "high",
+          "description": "Environment variable NORTHGATE_WAREHOUSE_API_TOKEN carries a live looking credential."
+        },
+        {
+          "id": "531",
+          "title": "Base image is end of life",
+          "severity": "critical",
+          "description": "openjdk:8u282-jdk-buster resolves to Debian 10 (buster), which left LTS support in June 2024."
+        },
+        {
+          "id": "59",
+          "title": "Image should not expose the JVM debug port or management endpoints publicly",
+          "severity": "medium",
+          "description": "Spring Boot actuator endpoints are exposed with management.endpoints.web.exposure.include=*."
+        }
+      ],
+      "complianceDistribution": {
+        "critical": 1,
+        "high": 2,
+        "medium": 1,
+        "low": 0
+      },
+      "vulnerabilityDistribution": {
+        "critical": 17,
+        "high": 39,
+        "medium": 11,
+        "low": 0,
+        "total": 67
+      },
+      "note": "Package level detail for this image is reported by X-ray; the entries here are configuration and compliance checks and are not counted in the 148 findings."
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ratings-service
+  namespace: northgate
+  labels:
+    app.kubernetes.io/name: ratings-service
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: ratings-service
+  ports:
+    - name: http
+      port: 80
+      targetPort: http

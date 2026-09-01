@@ -1,0 +1,44 @@
+Work Item Type,Title,Description,Acceptance Criteria,State,Area Path,Iteration Path,Tags,Priority
+User Story,Persist every grade change to a rating history table,"As the credit desk supervisor I want every grade change written to a history table so that I can answer an audit question about who changed what without restoring a backup.
+
+Constraints, all of which come from live dependencies:
+- The response shape of POST /api/ratings/{issuerId}/grade is frozen. A 2019 desktop client reads the four values out of that object positionally and breaks if a key is added, removed or reordered. RatingsApiTest.updateGradeResponseShapeIsFrozen is the contract.
+- There is no migration tool in this service. Schema changes go into ratings-service/src/main/resources/schema.sql, which the desk DBA applies by hand against staging and production, so the file has to stay idempotent.
+- The existing tests stay green. Do not edit them.
+- A grade change that succeeds but fails to write history is a defect. A history write must not leave the ratings row updated on its own.","- A rating_history row is written for every successful grade change, capturing issuer, previous grade, new grade, previous outlook, new outlook, the caller and a timestamp.
+- schema.sql creates the table with CREATE TABLE IF NOT EXISTS and can be run twice.
+- POST /api/ratings/{issuerId}/grade returns exactly the same JSON as before, key for key and in the same order.
+- A failed history write rolls the grade change back.
+- New tests cover the history row contents and the rollback.",Active,Northgate\Ratings,Northgate\2026\Sprint 14,brownfield;audit,2
+User Story,Expose the grade history for an issuer,"As a credit analyst I want GET /api/ratings/{issuerId}/history so that I can see how an issuer's grade moved without asking the data team for a query.
+
+Depends on the rating history table from the previous story. Newest change first. The endpoint is read only and lives on the public API surface, not under /api/admin.","- GET /api/ratings/{issuerId}/history returns the change history newest first.
+- An issuer that does not exist returns 404.
+- An issuer that exists but has never been regraded returns 200 with an empty array, not 404.
+- Tests cover the not-found case and the empty-history case.",New,Northgate\Ratings,Northgate\2026\Sprint 14,brownfield;api,2
+User Story,Filter the ratings search by sector,"As a credit analyst I want to narrow a ratings search to one sector so that a search for a common word does not return the whole book.
+
+The sector parameter already exists on GET /api/ratings/search. It is undocumented and untested, and the sector list is not validated against anything.","- The sector values accepted by the endpoint are validated against the sectors present in the ratings table.
+- An unknown sector returns 400 with a message naming the valid values.
+- Tests cover a valid sector, an unknown sector and no sector.",New,Northgate\Ratings,Northgate\2026\Sprint 15,api,3
+User Story,Retire the h2-console from the deployed service,"As the platform owner I want the H2 console disabled outside local development so that the deployed service does not expose a database shell.
+
+spring.h2.console.enabled is true in application.yml and there is no profile separation in this service yet.","- The H2 console is disabled by default and enabled only under a local profile.
+- Actuator exposure is reduced to health and info by default.
+- The service still starts locally with the console available.",New,Northgate\Ratings,Northgate\2026\Sprint 15,platform;hardening,2
+User Story,Record export jobs in the export_jobs table,"As the batch team I want each export run recorded in the export_jobs table that already exists in schema.sql so that a failed overnight run can be traced without reading container logs.
+
+The table is created but nothing writes to it.","- POST /api/exports/run inserts a job row with a generated id, the format, the desk, the start time and a state.
+- The state moves to COMPLETED or FAILED when the run finishes.
+- A test covers both outcomes.",New,Northgate\Ratings,Northgate\2026\Sprint 15,brownfield,3
+User Story,Publish an OpenAPI description of the public API,"As a consumer of the ratings API I want a machine readable description of the endpoints so that I can generate a client instead of reading the controllers.
+
+The frozen response shape of the grade update has to be described exactly as it is, including key order, with the reason stated in the description.","- An OpenAPI 3 document is served and covers every endpoint under /api/ratings and /api/exports.
+- The grade update response is documented as a frozen contract.
+- The build fails if the document cannot be generated.",New,Northgate\Ratings,Northgate\2026\Sprint 16,api;documentation,3
+Bug,Feed ingestion accepts a document with no issuers and reports success,"POST /api/feed/xml returns 200 and an empty array when the overnight feed arrives empty or with a changed root element. The overnight job treats that as a successful ingest and the desk finds out a day later that no ratings moved.","- An XML document containing no issuer elements is rejected with 400.
+- The error names the root element that was found.
+- A test covers the empty feed and a feed with a changed root element.",New,Northgate\Ratings,Northgate\2026\Sprint 14,brownfield;defect,2
+Bug,Grade update accepts any string as a grade,"POST /api/ratings/{issuerId}/grade writes whatever string it is given. A typo in the desktop client put 'AAA-' into the book in January and nothing rejected it.","- Grades are validated against the set of grades the desk uses.
+- An invalid grade returns 400 and does not change the row.
+- The response shape for a successful update is unchanged.",New,Northgate\Ratings,Northgate\2026\Sprint 15,defect,2

@@ -1,0 +1,8 @@
+target/
+security/gate-report.json
+*.class
+.idea/
+*.iml
+.vscode/
+__pycache__/
+deploy/k8s/secret.yaml

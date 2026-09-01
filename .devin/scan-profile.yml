@@ -1,0 +1,85 @@
+# Devin code scan profile for the ratings service.
+#
+# This is the counterpart to security/: instead of consuming a fabricated export, it asks
+# Devin to read the code and report what is actually there. Run it alongside the triage
+# playbook and compare the two lists. The interesting part of the comparison is not the
+# overlap, it is the two edges: findings the scanners raised that are not real, and defects
+# in the code that no scanner raised.
+#
+# Create with devin_code_scan_manage, or through Settings -> Code scans in the app.
+
+name: northgate-ratings-security
+type: security
+description: >
+  Security review of a Spring Boot 2.3 / Java 8 issuer ratings service that has been in
+  production since 2019. Prioritise reachability from unauthenticated HTTP requests over
+  rule severity, and report missing controls as well as unsafe code.
+
+repositories:
+  - northgate-ratings-platform
+
+include:
+  - "ratings-service/src/main/java/**"
+  - "ratings-service/src/main/resources/**"
+  - "ratings-service/Dockerfile"
+  - "pom.xml"
+  - "ratings-service/pom.xml"
+  - "deploy/k8s/**"
+
+exclude:
+  # The fabricated exports are inputs to triage, not code to be reviewed. Scanning them
+  # produces findings about the findings.
+  - "security/**"
+  - "ratings-service/src/test/**"
+  - "**/target/**"
+
+focus:
+  - id: authorization
+    prompt: >
+      Where is authorization enforced on the endpoints under /api/admin? Trace what happens
+      to a request that arrives with no X-Internal-Admin header and to one that arrives with
+      the header set to false. Report the request path from filter registration to
+      controller method, and state whether the control exists at all.
+  - id: untrusted-input-to-sink
+    prompt: >
+      For every controller method, trace request parameters and bodies to any SQL statement,
+      shell invocation, filesystem path, HTTP header or XML parser. For each one, say
+      whether the value is validated or enumerated before it arrives, and quote the line
+      that does or does not do so.
+  - id: deserialization-and-session
+    prompt: >
+      Review how session state is encoded, transmitted and reconstructed, including cookie
+      attributes and how session identifiers are generated.
+  - id: cryptography
+    prompt: >
+      Identify every hashing, encryption and random number use, the algorithm and mode, and
+      where the key material comes from.
+  - id: secrets
+    prompt: >
+      Find credentials and tokens committed to source, build files, image definitions or
+      manifests. Report the file and line. Treat every value found as fabricated: do not
+      attempt to use, validate or transmit any of them.
+  - id: error-handling-and-logging
+    prompt: >
+      Review what leaves the service in error responses and what reaches the logs,
+      specifically whether internal detail is returned to callers and whether user
+      controlled values are written to logs unescaped.
+  - id: build-and-image
+    prompt: >
+      Assess the base image lifecycle status, the user the container runs as, and whether
+      the Kubernetes manifests in deploy/k8s override either. Report the dependency versions
+      pinned in the root pom.xml that are behind their fixed releases and note that the
+      child module does not override them.
+  - id: safe-code
+    prompt: >
+      Identify code that looks unsafe to a pattern matcher but is not, particularly SQL
+      built by string concatenation where every interpolated value originates from a
+      server-side enum or a whitelist. Quote the line that makes it safe. Report these
+      explicitly rather than omitting them.
+
+options:
+  group_by_root_cause: true
+  require_reachability: true
+  require_false_positive_justification: true
+  report_missing_controls: true
+  open_pull_requests: false
