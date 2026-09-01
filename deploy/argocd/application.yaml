@@ -9,7 +9,7 @@ spec:
   project: default
   source:
     # Point this at your fork once the repository is pushed.
-    repoURL: https://github.com/OWNER/northgate-ratings-platform.git
+    repoURL: https://github.com/jackoconnor-sudo/CRSL-Demo.git
     targetRevision: main
     path: deploy/k8s
     directory:
