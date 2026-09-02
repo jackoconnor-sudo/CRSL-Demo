@@ -178,7 +178,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/feed/LegacyFeedParser.java",
-        "lineNumber": 31
+        "lineNumber": 57
       },
       "abstract": "DocumentBuilderFactory is used without disallow-doctype-decl on request supplied XML.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -186,7 +186,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "9AC3475927D9BC47",
+      "issueInstanceId": "259542F15B119B25",
       "category": "XML External Entity Injection",
       "kingdom": "Input Validation and Representation",
       "friority": "Critical",
@@ -204,7 +204,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "14E6953A1BB1B981",
+      "issueInstanceId": "B75397DA1F855480",
       "category": "XML External Entity Injection",
       "kingdom": "Input Validation and Representation",
       "friority": "High",
@@ -214,7 +214,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/feed/LegacyFeedParser.java",
-        "lineNumber": 47
+        "lineNumber": 70
       },
       "abstract": "TransformerFactory is created without ACCESS_EXTERNAL_DTD restrictions.",
       "scanDate": "2026-02-17T02:14:38Z",
