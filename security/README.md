@@ -7,6 +7,9 @@ at is not. Every application finding is anchored to a snippet of source and the 
 numbers are resolved from the working tree by `generate_findings.py`, so the references
 stay accurate when code moves.
 
+`threat-model.md` is the STRIDE threat model for the service; its risk table maps each
+threat to the gate condition in `gate_check.py` that tracks it.
+
 ## The exports
 
 | File | Stands in for | Contents |
