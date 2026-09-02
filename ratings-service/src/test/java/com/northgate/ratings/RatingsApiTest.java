@@ -64,4 +64,18 @@ class RatingsApiTest {
                         .content("{\"grade\":\"BB+\",\"outlook\":\"negative\"}"))
                 .andExpect(status().isNotFound());
     }
+
+    @Test
+    void exportRunRejectsShellMetacharactersInFormat() throws Exception {
+        mvc.perform(post("/api/exports/run").param("format", "csv;id"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("unsupported export format"));
+    }
+
+    @Test
+    void exportRunRejectsShellMetacharactersInDesk() throws Exception {
+        mvc.perform(post("/api/exports/run").param("format", "csv").param("desk", "credit;$(id)"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("invalid desk"));
+    }
 }

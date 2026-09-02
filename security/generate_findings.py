@@ -132,9 +132,9 @@ FORTIFY_ISSUES = [
      "A 56 bit DES key is derived from a string constant."),
 
     # Command injection.
-    (EXPORT_CTRL, "String command = \"/opt/northgate/bin/export.sh", 1, "Command Injection", 78, "Critical",
+    (EXPORT_CTRL, "List<String> argv = Arrays.asList(EXPORT_SCRIPT", 1, "Command Injection", 78, "Critical",
      "The format and desk request parameters are concatenated into a shell command."),
-    (EXPORT_CTRL, "Runtime.getRuntime().exec(new String[] {\"/bin/sh\", \"-c\", command})", 1, "Command Injection", 78, "Critical",
+    (EXPORT_CTRL, "new ProcessBuilder(argv)", 1, "Command Injection", 78, "Critical",
      "The concatenated command is executed through /bin/sh -c."),
 
     # Path manipulation.
