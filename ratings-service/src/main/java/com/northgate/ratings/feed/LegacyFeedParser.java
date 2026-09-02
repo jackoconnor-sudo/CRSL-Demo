@@ -5,8 +5,11 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -28,9 +31,7 @@ public class LegacyFeedParser {
 
     public List<Rating> parse(String xml) {
         try {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            factory.setNamespaceAware(true);
-            DocumentBuilder builder = factory.newDocumentBuilder();
+            DocumentBuilder builder = secureDocumentBuilderFactory().newDocumentBuilder();
             InputStream in = new ByteArrayInputStream(xml.getBytes("UTF-8"));
             Document document = builder.parse(in);
             return toRatings(document);
@@ -41,16 +42,36 @@ public class LegacyFeedParser {
 
     public String echoNormalised(String xml) {
         try {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            Document document = factory.newDocumentBuilder()
+            Document document = secureDocumentBuilderFactory().newDocumentBuilder()
                     .parse(new ByteArrayInputStream(xml.getBytes("UTF-8")));
-            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            Transformer transformer = secureTransformerFactory().newTransformer();
             java.io.StringWriter writer = new java.io.StringWriter();
             transformer.transform(new DOMSource(document), new StreamResult(writer));
             return writer.toString();
         } catch (Exception e) {
             throw new IllegalArgumentException("feed could not be normalised: " + e.getMessage(), e);
         }
+    }
+
+    private static DocumentBuilderFactory secureDocumentBuilderFactory() throws ParserConfigurationException {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setNamespaceAware(true);
+        factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+        factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        factory.setFeature("http://xml.org/sax/features/external-general-entities", false);
+        factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+        factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+        factory.setXIncludeAware(false);
+        factory.setExpandEntityReferences(false);
+        return factory;
+    }
+
+    private static TransformerFactory secureTransformerFactory() throws TransformerConfigurationException {
+        TransformerFactory factory = TransformerFactory.newInstance();
+        factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+        factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+        factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
+        return factory;
     }
 
     private List<Rating> toRatings(Document document) {
