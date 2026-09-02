@@ -96,9 +96,9 @@ FORTIFY_ISSUES = [
     # XXE.
     (FEED, "DocumentBuilderFactory.newInstance();", 1, "XML External Entity Injection", 611, "Critical",
      "DocumentBuilderFactory is used without disallow-doctype-decl on request supplied XML."),
-    (FEED, "Document document = factory.newDocumentBuilder()", 1, "XML External Entity Injection", 611, "Critical",
+    (FEED, "Document document = secureDocumentBuilderFactory().newDocumentBuilder()", 1, "XML External Entity Injection", 611, "Critical",
      "The normalise path parses request supplied XML with an unhardened factory."),
-    (FEED, "TransformerFactory.newInstance().newTransformer()", 1, "XML External Entity Injection", 611, "High",
+    (FEED, "TransformerFactory factory = TransformerFactory.newInstance();", 1, "XML External Entity Injection", 611, "High",
      "TransformerFactory is created without ACCESS_EXTERNAL_DTD restrictions."),
 
     # Hardcoded credentials.
