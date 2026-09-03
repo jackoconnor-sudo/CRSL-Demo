@@ -148,9 +148,9 @@ FORTIFY_ISSUES = [
      "An unvalidated request parameter is written into a response header."),
 
     # Deserialization.
-    (SESSION_CODEC, "new ObjectInputStream(new ByteArrayInputStream(raw))", 1, "Dynamic Code Evaluation: Unsafe Deserialization", 502, "Critical",
+    (SESSION_CODEC, "byte[] presented = Base64.decodeBase64(parts[3])", 1, "Dynamic Code Evaluation: Unsafe Deserialization", 502, "Critical",
      "A cookie supplied by the client is deserialized with no allowlist."),
-    (SESSION_CODEC, "return (SessionState) in.readObject()", 1, "Dynamic Code Evaluation: Unsafe Deserialization", 502, "Critical",
+    (SESSION_CODEC, "return new SessionState(unfield(parts[0])", 1, "Dynamic Code Evaluation: Unsafe Deserialization", 502, "Critical",
      "readObject runs before the cast is checked."),
     (SESSION_CTRL, "codec.decode(cookie)", 1, "Dynamic Code Evaluation: Unsafe Deserialization", 502, "High",
      "The whoami endpoint deserializes the session cookie on an unauthenticated path."),
