@@ -54,7 +54,7 @@ public class ExportController {
             result.put("output", output.toString());
             return ResponseEntity.ok(result);
         } catch (Exception e) {
-            LOG.warn("export run failed: " + e.getMessage());
+            LOG.warn("export run failed: {}", e.getMessage());
             result.put("command", command);
             result.put("error", e.toString());
             return ResponseEntity.status(500).body(result);

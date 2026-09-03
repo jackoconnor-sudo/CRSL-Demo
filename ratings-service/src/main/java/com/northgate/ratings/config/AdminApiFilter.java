@@ -34,7 +34,7 @@ public class AdminApiFilter implements Filter {
         HttpServletRequest http = (HttpServletRequest) request;
         String caller = http.getHeader("X-Forwarded-User");
         boolean admin = "true".equalsIgnoreCase(http.getHeader(ADMIN_HEADER));
-        LOG.info("admin check user=" + caller + " path=" + http.getRequestURI() + " admin=" + admin);
+        LOG.info("admin check user={} path={} admin={}", caller, http.getRequestURI(), admin);
         chain.doFilter(request, response);
     }
 
