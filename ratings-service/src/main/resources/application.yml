@@ -20,6 +20,8 @@ spring:
       path: /h2-console
 
 northgate:
+  admin:
+    token: ${NORTHGATE_ADMIN_TOKEN:}
   export:
     dir: /var/northgate/exports
   warehouse:

@@ -628,7 +628,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/config/AdminApiFilter.java",
-        "lineNumber": 38
+        "lineNumber": 54
       },
       "abstract": "The filter evaluates the admin condition and then forwards every request regardless.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -664,7 +664,7 @@
       "impact": 2.5,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/config/AdminApiFilter.java",
-        "lineNumber": 37
+        "lineNumber": 49
       },
       "abstract": "The X-Forwarded-User header is written to the log without neutralising newlines.",
       "scanDate": "2026-02-17T02:14:38Z",
