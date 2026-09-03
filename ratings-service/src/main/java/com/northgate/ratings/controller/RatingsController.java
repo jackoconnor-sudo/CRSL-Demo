@@ -33,7 +33,7 @@ public class RatingsController {
     @GetMapping("/{issuerId}")
     public ResponseEntity<Rating> get(@PathVariable String issuerId,
                                       @RequestParam(value = "requestedBy", required = false) String requestedBy) {
-        LOG.info("rating lookup issuer=" + issuerId + " requestedBy=" + requestedBy);
+        LOG.info("rating lookup issuer={} requestedBy={}", issuerId, requestedBy);
         Rating rating = service.find(issuerId);
         if (rating == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

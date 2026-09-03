@@ -41,7 +41,7 @@ public class WarehouseClient {
                 return EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
             }
         } catch (Exception e) {
-            LOG.warn("warehouse lookup failed for " + issuerId + ": " + e.getMessage());
+            LOG.warn("warehouse lookup failed for {}: {}", issuerId, e.getMessage());
             return null;
         }
     }

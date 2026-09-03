@@ -654,7 +654,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "F253A18D6A1A3425",
+      "issueInstanceId": "CDD2B058CAB619E6",
       "category": "Log Forging",
       "kingdom": "Input Validation and Representation",
       "friority": "Medium",
@@ -672,7 +672,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "AC3C1A569CF1C37A",
+      "issueInstanceId": "46F5E524802AD9C9",
       "category": "Log Forging",
       "kingdom": "Input Validation and Representation",
       "friority": "Medium",
@@ -690,7 +690,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "11C5E9E555CFA5E3",
+      "issueInstanceId": "C17F12D3D8DECEBC",
       "category": "Log Forging",
       "kingdom": "Input Validation and Representation",
       "friority": "Low",
