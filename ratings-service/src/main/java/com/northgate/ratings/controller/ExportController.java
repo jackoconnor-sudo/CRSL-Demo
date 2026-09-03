@@ -1,9 +1,11 @@
 package com.northgate.ratings.controller;
 
-import java.io.File;
-import java.io.InputStreamReader;
 import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -63,21 +65,52 @@ public class ExportController {
 
     @GetMapping("/download")
     public ResponseEntity<byte[]> download(@RequestParam("name") String name) throws Exception {
-        File file = new File(exportDir + "/" + name);
-        if (!file.exists()) {
+        Path file = resolveInsideExportDir(name);
+        if (file == null || !Files.isRegularFile(file)) {
             return ResponseEntity.notFound().build();
         }
-        byte[] bytes = Files.readAllBytes(file.toPath());
+        byte[] bytes = Files.readAllBytes(file);
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + name)
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=\"" + file.getFileName().toString().replace("\"", "") + "\"")
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
                 .body(bytes);
     }
 
     @GetMapping("/list")
     public String[] list(@RequestParam(value = "subdir", defaultValue = "") String subdir) {
-        File dir = new File(exportDir + "/" + subdir);
-        String[] names = dir.list();
+        Path dir = resolveInsideExportDir(subdir);
+        if (dir == null) {
+            return new String[0];
+        }
+        String[] names = dir.toFile().list();
         return names == null ? new String[0] : names;
+    }
+
+    /**
+     * Resolves a caller supplied relative path against the export directory and returns null
+     * when the normalised result would escape it.
+     */
+    private Path resolveInsideExportDir(String relative) {
+        if (relative == null || relative.indexOf('\0') >= 0) {
+            return null;
+        }
+        Path root = Paths.get(exportDir).toAbsolutePath().normalize();
+        Path resolved = root.resolve(relative).normalize();
+        if (!resolved.startsWith(root)) {
+            return null;
+        }
+        try {
+            if (Files.exists(resolved)) {
+                Path real = resolved.toRealPath();
+                Path realRoot = root.toRealPath();
+                if (!real.startsWith(realRoot)) {
+                    return null;
+                }
+            }
+        } catch (IOException e) {
+            return null;
+        }
+        return resolved;
     }
 }
