@@ -222,7 +222,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "F2272BB394188EF4",
+      "issueInstanceId": "8A4CFE8C814B1145",
       "category": "Password Management: Hardcoded Password",
       "kingdom": "Security Features",
       "friority": "Critical",
@@ -232,7 +232,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/integration/WarehouseClient.java",
-        "lineNumber": 26
+        "lineNumber": 62
       },
       "abstract": "A service account password is compiled into the artifact.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -240,7 +240,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "B4550CDD80B33EDA",
+      "issueInstanceId": "27D302B948405B45",
       "category": "Key Management: Hardcoded Encryption Key",
       "kingdom": "Security Features",
       "friority": "Critical",
@@ -250,7 +250,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/integration/WarehouseClient.java",
-        "lineNumber": 27
+        "lineNumber": 50
       },
       "abstract": "A live warehouse API token is compiled into the artifact.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -276,7 +276,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "6675A6634708BF69",
+      "issueInstanceId": "5494FEF2E6507482",
       "category": "Password Management: Hardcoded Password",
       "kingdom": "Security Features",
       "friority": "High",
@@ -286,7 +286,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/controller/SessionController.java",
-        "lineNumber": 23
+        "lineNumber": 42
       },
       "abstract": "The ops console credential is compared against a constant digest.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -294,7 +294,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "18EB466FC8C79CE8",
+      "issueInstanceId": "45EA0B16090639BD",
       "category": "Password Management: Password in Configuration File",
       "kingdom": "Environment",
       "friority": "High",
@@ -322,7 +322,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/resources/application.yml",
-        "lineNumber": 27
+        "lineNumber": 29
       },
       "abstract": "The warehouse API token is committed to the repository.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -330,7 +330,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "5FD5B8A029D91839",
+      "issueInstanceId": "61C797710F597DC1",
       "category": "Password Management: Password in Configuration File",
       "kingdom": "Environment",
       "friority": "High",
@@ -340,7 +340,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/Dockerfile",
-        "lineNumber": 7
+        "lineNumber": 6
       },
       "abstract": "The warehouse API token is baked into an image layer as an environment variable.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -394,7 +394,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/controller/SessionController.java",
-        "lineNumber": 36
+        "lineNumber": 40
       },
       "abstract": "Authentication compares an MD5 digest of the submitted password.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -610,7 +610,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/controller/SessionController.java",
-        "lineNumber": 59
+        "lineNumber": 64
       },
       "abstract": "The whoami endpoint deserializes the session cookie on an unauthenticated path.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -700,7 +700,7 @@
       "impact": 2.5,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/integration/WarehouseClient.java",
-        "lineNumber": 44
+        "lineNumber": 56
       },
       "abstract": "The issuerId value is written to the log unneutralised.",
       "scanDate": "2026-02-17T02:14:38Z",

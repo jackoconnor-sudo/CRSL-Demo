@@ -11,8 +11,8 @@ spring:
     name: ratings-service
   datasource:
     url: jdbc:h2:mem:ratings;DB_CLOSE_DELAY=-1
-    username: ratings_app
-    password: R4tings-app-2019
+    username: ${SPRING_DATASOURCE_USERNAME:ratings_app}
+    password: ${SPRING_DATASOURCE_PASSWORD:}
     driver-class-name: org.h2.Driver
   h2:
     console:
@@ -24,7 +24,11 @@ northgate:
     dir: /var/northgate/exports
   warehouse:
     base-url: http://10.42.8.15:8081
-    api-token: ngw_live_8f3c21bb94d24e7ba0c15ee7d3f10a92
+    user: ${NORTHGATE_WAREHOUSE_USER:}
+    password: ${NORTHGATE_WAREHOUSE_PASSWORD:}
+    api-token: ${NORTHGATE_WAREHOUSE_API_TOKEN:}
+  ops:
+    console-password-hash: ${NORTHGATE_OPS_CONSOLE_PASSWORD_HASH:}
 
 management:
   endpoints:

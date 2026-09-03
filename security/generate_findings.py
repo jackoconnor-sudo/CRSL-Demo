@@ -102,19 +102,19 @@ FORTIFY_ISSUES = [
      "TransformerFactory is created without ACCESS_EXTERNAL_DTD restrictions."),
 
     # Hardcoded credentials.
-    (WAREHOUSE, "WAREHOUSE_PASSWORD = ", 1, "Password Management: Hardcoded Password", 798, "Critical",
+    (WAREHOUSE, "String pair = user + \":\" + password", 1, "Password Management: Hardcoded Password", 798, "Critical",
      "A service account password is compiled into the artifact."),
-    (WAREHOUSE, "WAREHOUSE_API_TOKEN = ", 1, "Key Management: Hardcoded Encryption Key", 798, "Critical",
+    (WAREHOUSE, "get.addHeader(\"X-Api-Token\", apiToken)", 1, "Key Management: Hardcoded Encryption Key", 798, "Critical",
      "A live warehouse API token is compiled into the artifact."),
     (DIGEST, "FIELD_KEY = ", 1, "Key Management: Hardcoded Encryption Key", 321, "Critical",
      "The field encryption key is a string constant."),
-    (SESSION_CTRL, "OPS_CONSOLE_PASSWORD_HASH = ", 1, "Password Management: Hardcoded Password", 798, "High",
+    (SESSION_CTRL, "opsConsolePasswordHash.getBytes(StandardCharsets.UTF_8)", 1, "Password Management: Hardcoded Password", 798, "High",
      "The ops console credential is compared against a constant digest."),
-    (APP_YML, "password: R4tings-app-2019", 1, "Password Management: Password in Configuration File", 260, "High",
+    (APP_YML, "password: ${SPRING_DATASOURCE_PASSWORD:}", 1, "Password Management: Password in Configuration File", 260, "High",
      "The datasource password is committed to the repository."),
     (APP_YML, "api-token: ", 1, "Password Management: Password in Configuration File", 260, "High",
      "The warehouse API token is committed to the repository."),
-    (DOCKERFILE, "NORTHGATE_WAREHOUSE_API_TOKEN=", 1, "Password Management: Password in Configuration File", 798, "High",
+    (DOCKERFILE, "JAVA_OPTS=", 1, "Password Management: Password in Configuration File", 798, "High",
      "The warehouse API token is baked into an image layer as an environment variable."),
 
     # Weak cryptography.
