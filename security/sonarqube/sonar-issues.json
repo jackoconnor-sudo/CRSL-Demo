@@ -83,7 +83,7 @@
       "severity": "MAJOR",
       "component": "northgate:ratings-service/src/main/java/com/northgate/ratings/controller/SessionController.java",
       "project": "northgate",
-      "line": 40,
+      "line": 45,
       "message": "Add the \"HttpOnly\" attribute to this cookie.",
       "type": "VULNERABILITY",
       "effort": "30min",
