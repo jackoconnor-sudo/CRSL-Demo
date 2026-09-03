@@ -6,7 +6,7 @@
   "issueCount": 42,
   "issues": [
     {
-      "issueInstanceId": "BFC8633964638D8E",
+      "issueInstanceId": "48B118273F3DD956",
       "category": "SQL Injection",
       "kingdom": "Input Validation and Representation",
       "friority": "Critical",
@@ -16,7 +16,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/repository/RatingsRepository.java",
-        "lineNumber": 28
+        "lineNumber": 30
       },
       "abstract": "The issuerId path variable reaches a statement built by concatenation.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -24,7 +24,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "AB40CE15F16DC67C",
+      "issueInstanceId": "12D10C8F9F64F929",
       "category": "SQL Injection",
       "kingdom": "Input Validation and Representation",
       "friority": "Critical",
@@ -34,7 +34,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/repository/RatingsRepository.java",
-        "lineNumber": 34
+        "lineNumber": 40
       },
       "abstract": "The q request parameter reaches a statement built by concatenation.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -42,7 +42,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "936573FC1BBD3380",
+      "issueInstanceId": "AB58CFAC5F68C253",
       "category": "SQL Injection",
       "kingdom": "Input Validation and Representation",
       "friority": "Critical",
@@ -52,7 +52,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/repository/RatingsRepository.java",
-        "lineNumber": 36
+        "lineNumber": 37
       },
       "abstract": "The sector request parameter is appended to the search predicate.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -60,7 +60,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "6F99B2D1E190B6D6",
+      "issueInstanceId": "9DE5F8EBC3F64724",
       "category": "SQL Injection",
       "kingdom": "Input Validation and Representation",
       "friority": "Critical",
@@ -70,7 +70,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/repository/RatingsRepository.java",
-        "lineNumber": 42
+        "lineNumber": 55
       },
       "abstract": "quoteCsv quotes but does not escape; the grades parameter reaches the statement.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -78,7 +78,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "92570B8EEC28A57F",
+      "issueInstanceId": "9BE0E176048EA551",
       "category": "SQL Injection",
       "kingdom": "Input Validation and Representation",
       "friority": "Critical",
@@ -88,7 +88,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/repository/RatingsRepository.java",
-        "lineNumber": 47
+        "lineNumber": 61
       },
       "abstract": "grade and outlook from the request body reach an UPDATE built by concatenation.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -96,7 +96,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "35EED93D5FD5E8F6",
+      "issueInstanceId": "40DF912F66DCD9AB",
       "category": "SQL Injection",
       "kingdom": "Input Validation and Representation",
       "friority": "High",
@@ -106,7 +106,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/repository/RatingsRepository.java",
-        "lineNumber": 53
+        "lineNumber": 66
       },
       "abstract": "The sector value reaches a COUNT statement built by concatenation.",
       "scanDate": "2026-02-17T02:14:38Z",
