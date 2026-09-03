@@ -18,9 +18,9 @@ the code as written.
 | ----- | -------------- | ------------------------ |
 | Issuer credit grades | `ratings` table, `/api/ratings/*`, `/api/admin/*` | Pre-publication grade changes are market-moving; integrity matters more than confidentiality |
 | Warehouse service account | `WarehouseClient` constants, `application.yml`, `Dockerfile` `ENV`, `ratings-warehouse` Secret | Lateral movement into the warehouse, which is the system of record for pre-2019 data |
-| Desk session state | `ng_session` cookie, serialised `SessionState` | Carries the `admin` flag; forging it is privilege escalation |
+| Desk session state | `ng_session` cookie, serialised `SessionState` | Carries the `admin` flag; forging it becomes privilege escalation once anything authorizes on it |
 | Export files | `/var/northgate/exports`, `emptyDir` volume | Contains desk-scoped extracts; the download endpoint reads arbitrary paths |
-| Service execution context | Container, running as root | Foothold on the node and access to the mounted Secret |
+| Service execution context | Container, running as root | Process environment carries the warehouse credential (`envFrom` the `ratings-warehouse` Secret); root widens post-exploitation options |
 | Ops console credential | `OPS_CONSOLE_PASSWORD_HASH` in `SessionController` | Unsalted-format MD5 of the admin password, offline-crackable |
 
 ## Data flow
@@ -86,15 +86,26 @@ Trust boundaries, in the order an attacker crosses them:
 ### Session handling (`SessionCookieCodec`, `SessionController`, `LegacyDigest`)
 
 - **Tampering / Elevation of privilege.** The cookie is base64 of a serialised
-  `SessionState` with no MAC. Re-encoding one with `admin=true` is trivial; independently,
+  `SessionState` with no MAC, so re-encoding one with `admin=true` is trivial (see the
+  scope note below for what that currently buys). Independently,
   `decode` calls `ObjectInputStream.readObject` on the cookie, which is remote code
   execution given a gadget on the classpath — and `commons-collections` 3.2.1 and
   `guava` 24.1-jre, both pinned in the parent POM, are the classic gadget sources.
-- **Information disclosure.** `application.yml` sets `http-only: false` and `secure: false`,
-  so the cookie is script-readable and travels in cleartext.
-- **Spoofing.** `LegacyDigest.hashPassword` is MD5 with the username as salt, and
-  `newSessionId` uses `java.util.Random`, whose output is predictable from ~2 observed
-  values. `LegacyDigest.encryptField` is DES/ECB under the hardcoded 8-byte key `n0rthg8t`.
+- **Information disclosure.** `SessionController.login` builds the `Cookie` by hand and
+  never calls `setHttpOnly`/`setSecure`, so the cookie is script-readable and travels in
+  cleartext. (The `server.servlet.session.cookie.*` settings in `application.yml` only
+  govern the container's `JSESSIONID`, which this service does not use, so they are
+  misleading rather than causal.)
+- **Spoofing.** `LegacyDigest.hashPassword` is MD5 with the username as salt, so
+  `OPS_CONSOLE_PASSWORD_HASH` is offline-crackable. `newSessionId` uses `java.util.Random`
+  (predictable from ~2 observed values) but the value is only echoed in the login response
+  and never stored or accepted anywhere, so it is latent debt rather than a live threat.
+  `LegacyDigest.encryptField` is DES/ECB under the hardcoded 8-byte key `n0rthg8t`.
+- **Scope of the `admin` flag.** Today the flag is read only by `whoami`; no endpoint
+  authorizes on it. Cookie forgery is therefore an integrity defect with no privilege
+  consequence *until* mitigation 1 below moves admin authorization onto the session —
+  at which point an unsigned cookie becomes the critical path. The two must be fixed
+  together.
 
 ### Ratings and reports (`RatingsRepository`, `ReportController`)
 
@@ -110,8 +121,10 @@ Trust boundaries, in the order an attacker crosses them:
 ### Export surface (`ExportController`, `docker/export.sh`)
 
 - **Elevation of privilege.** `run` concatenates `format` and `desk` into a `/bin/sh -c`
-  string: `?format=csv;id` is command execution as root inside the container, which reaches
-  the mounted warehouse Secret and the node's kubelet credentials path.
+  string: `?format=csv;id` is command execution as root inside the container. The
+  warehouse credential is in the process environment (`envFrom` the `ratings-warehouse`
+  Secret and the image `ENV`), so it is one `env` away; there is no hostPath or Secret
+  volume, so node-level access would need a separate container escape.
 - **Information disclosure.** `download` and `list` resolve `name`/`subdir` against
   `exportDir` with no canonicalisation, so `../../etc/passwd` (or `../../proc/self/environ`,
   which yields `NORTHGATE_WAREHOUSE_API_TOKEN`) is readable.
@@ -154,15 +167,15 @@ Ordered by risk. "Gate" is the matching condition id in `security/gate_check.py`
 | 2 | RCE via Java deserialization of the session cookie | T, E | `Cookie: ng_session` | High | High | **Critical** | `unsafe-deserialization` |
 | 3 | Command injection in the export runner, as root | E, T | `POST /api/exports/run` | High | High | **Critical** | `command-injection` |
 | 4 | SQL injection across five repository methods | T, I | `/api/ratings/*` | High | High | **Critical** | `sql-injection` |
-| 5 | Forged `admin=true` session cookie (unsigned, unencrypted) | T, E | `Cookie: ng_session` | High | High | **Critical** | — |
-| 6 | Warehouse credentials committed to source, config and image `ENV` | I | Repo, image, `/proc/self/environ` | High | High | **High** | `hardcoded-secrets` |
-| 7 | XXE file read and in-cluster SSRF via the legacy feed | I, D | `POST /api/feed/xml*` | Medium | High | **High** | `xml-external-entities` |
-| 8 | Path traversal on export download and list | I | `GET /api/exports/download` | High | Medium | **High** | `path-traversal` |
-| 9 | Actuator wildcard and H2 console exposed unauthenticated | I | `/actuator/*`, `/h2-console` | High | Medium | **High** | — |
-| 10 | Known-vulnerable pinned dependencies (Spring Boot 2.3.4, Jackson 2.9.10, commons-collections 3.2.1, Guava 24.1, httpclient 4.5.5, log4j2 2.14.1) | T, E | Various | Medium | High | **High** | `vulnerable-dependencies` |
-| 11 | Broken crypto: MD5 password hashing, DES/ECB field encryption, `java.util.Random` session ids | S, I | `/api/session/login` | Medium | Medium | **Medium** | `weak-cryptography` |
-| 12 | Container runs as root on an EOL base image, no `securityContext` | E | Post-exploitation of 2/3 | Medium | High | **Medium** | `container-runs-as-root`, `base-image-eol` |
-| 13 | Stack traces and cleartext session cookie leak internal detail | I | Any error path | High | Low | **Medium** | — |
+| 5 | Warehouse credentials committed to source, config and image `ENV` | I | Repo, image, `/proc/self/environ` | High | High | **High** | `hardcoded-secrets` |
+| 6 | XXE file read and in-cluster SSRF via the legacy feed | I, D | `POST /api/feed/xml*` | Medium | High | **High** | `xml-external-entities` |
+| 7 | Path traversal on export download and list | I | `GET /api/exports/download` | High | Medium | **High** | `path-traversal` |
+| 8 | Actuator wildcard and H2 console exposed unauthenticated | I | `/actuator/*`, `/h2-console` | High | Medium | **High** | — |
+| 9 | Known-vulnerable pinned dependencies (Spring Boot 2.3.4, Jackson 2.9.10, commons-collections 3.2.1, Guava 24.1, httpclient 4.5.5, log4j2 2.14.1) | T, E | Various | Medium | High | **High** | `vulnerable-dependencies` |
+| 10 | Broken crypto: MD5 password hashing, DES/ECB field encryption | S, I | `/api/session/login` | Medium | Medium | **Medium** | `weak-cryptography` |
+| 11 | Container runs as root on an EOL base image, no `securityContext` | E | Post-exploitation of 2/3 | Medium | High | **Medium** | `container-runs-as-root`, `base-image-eol` |
+| 12 | Stack traces and cleartext, script-readable session cookie leak internal detail | I | Any error path | High | Low | **Medium** | — |
+| 13 | Forged `admin=true` session cookie (unsigned) — no privilege effect today, becomes critical once admin authorization is derived from the session | T | `Cookie: ng_session` | High | Low (latent High) | **Low** | — |
 | 14 | Log forging / weak audit trail from unvalidated `X-Forwarded-User` | R | `/api/admin/*` | Medium | Low | **Low** | — |
 | 15 | Unbounded XML expansion and unbounded result sets | D | Feed, reports | Medium | Low | **Low** | — |
 
@@ -175,31 +188,32 @@ workflow starts one session per gate condition rather than one for the whole gat
    flag is absent, and stop trusting a header for authorization: derive the decision from
    the authenticated session. Have the ingress strip `X-Internal-Admin` and
    `X-Forwarded-User` from inbound requests regardless.
-2. **Stop deserialising the cookie (2, 5).** Replace `ObjectInputStream` with a JSON or
-   delimited encoding plus an HMAC over the payload, and set `http-only: true`,
-   `secure: true`, `SameSite=Lax`. Keep the wire format versioned so old cookies fail
+2. **Stop deserialising the cookie (2, 13).** Replace `ObjectInputStream` with a JSON or
+   delimited encoding plus an HMAC over the payload, and call `setHttpOnly(true)`,
+   `setSecure(true)` and add `SameSite=Lax` on the cookie itself. Land this with or before
+   step 1, since step 1 makes the cookie the authorization input. Keep the wire format versioned so old cookies fail
    closed rather than being accepted.
-3. **Remove the shells and the traversal (3, 8).** Invoke `export.sh` with a
+3. **Remove the shells and the traversal (3, 7).** Invoke `export.sh` with a
    `ProcessBuilder` argument array, validate `format`/`desk` against enums, and resolve
    download paths with `toRealPath()` plus a `startsWith(exportDir)` check.
 4. **Parameterise every statement (4).** `JdbcTemplate` placeholders throughout
    `RatingsRepository`, including the `IN` list, which needs generated `?` placeholders
    rather than `quoteCsv`.
-5. **Rotate and externalise the credential (6).** Remove the constants and the `ENV`, read
+5. **Rotate and externalise the credential (5).** Remove the constants and the `ENV`, read
    from the mounted Secret, rotate `svc_ratings` and the API token, and move the warehouse
    call to TLS with a connect/read timeout.
-6. **Harden the parsers (7, 15).** `disallow-doctype-decl` on both factories,
+6. **Harden the parsers (6, 15).** `disallow-doctype-decl` on both factories,
    `setExpandEntityReferences(false)`, plus a body-size ceiling.
-7. **Shrink the platform surface (9, 12, 13).** Restrict `management.endpoints` to
+7. **Shrink the platform surface (8, 11, 12).** Restrict `management.endpoints` to
    `health,info`, disable the H2 console, drop stack traces from response bodies, add
    `USER` to the Dockerfile with a matching `securityContext`
    (`runAsNonRoot`, `readOnlyRootFilesystem`, dropped capabilities), and move to a
    supported base image.
-8. **Retire the legacy crypto (11).** The formats are a compatibility contract with the
+8. **Retire the legacy crypto (10).** The formats are a compatibility contract with the
    desktop client and the batch, so this needs a migration: bcrypt/Argon2 for passwords
    with a rehash-on-login path, AES-GCM for fields with a key from the Secret, and
-   `SecureRandom` for identifiers.
-9. **Raise the dependency floor (10).** Bump the six pins in the parent POM and let the
+   `SecureRandom` for any identifier that ever becomes security-relevant.
+9. **Raise the dependency floor (9).** Bump the six pins in the parent POM and let the
    child module inherit them; `commons-collections` and `guava` matter most because they
    are the gadget sources behind threat 2.
 
