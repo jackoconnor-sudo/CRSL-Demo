@@ -4,8 +4,13 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
 import java.nio.file.Files;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.regex.Pattern;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -29,6 +34,11 @@ public class ExportController {
 
     private static final Logger LOG = LogManager.getLogger(ExportController.class);
 
+    private static final String EXPORT_HELPER = "/opt/northgate/bin/export.sh";
+    private static final Set<String> FORMATS = Collections.unmodifiableSet(
+            new HashSet<>(Arrays.asList("csv", "json", "xml", "xlsx")));
+    private static final Pattern DESK = Pattern.compile("[a-z][a-z0-9_-]{0,31}");
+
     private final String exportDir;
 
     public ExportController(@Value("${northgate.export.dir:/var/northgate/exports}") String exportDir) {
@@ -38,10 +48,15 @@ public class ExportController {
     @PostMapping("/run")
     public ResponseEntity<Map<String, Object>> run(@RequestParam("format") String format,
                                                    @RequestParam(value = "desk", defaultValue = "credit") String desk) {
-        String command = "/opt/northgate/bin/export.sh --format " + format + " --desk " + desk;
         Map<String, Object> result = new LinkedHashMap<>();
+        if (!FORMATS.contains(format) || !DESK.matcher(desk).matches()) {
+            result.put("error", "unsupported format or desk");
+            return ResponseEntity.badRequest().body(result);
+        }
+        String[] argv = {EXPORT_HELPER, "--format", format, "--desk", desk};
+        String command = String.join(" ", argv);
         try {
-            Process process = Runtime.getRuntime().exec(new String[] {"/bin/sh", "-c", command});
+            Process process = new ProcessBuilder(argv).redirectErrorStream(true).start();
             StringBuilder output = new StringBuilder();
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
                 String line;

@@ -456,7 +456,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "AD9A739249E58EB7",
+      "issueInstanceId": "305D00429A712FC3",
       "category": "Command Injection",
       "kingdom": "Input Validation and Representation",
       "friority": "Critical",
@@ -466,7 +466,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/controller/ExportController.java",
-        "lineNumber": 41
+        "lineNumber": 56
       },
       "abstract": "The format and desk request parameters are concatenated into a shell command.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -474,7 +474,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "1F2774A4DD11B848",
+      "issueInstanceId": "687D8F22F1FB1551",
       "category": "Command Injection",
       "kingdom": "Input Validation and Representation",
       "friority": "Critical",
@@ -484,7 +484,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/controller/ExportController.java",
-        "lineNumber": 44
+        "lineNumber": 59
       },
       "abstract": "The concatenated command is executed through /bin/sh -c.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -502,7 +502,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/controller/ExportController.java",
-        "lineNumber": 66
+        "lineNumber": 81
       },
       "abstract": "The name request parameter is concatenated into a filesystem path.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -520,7 +520,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/controller/ExportController.java",
-        "lineNumber": 70
+        "lineNumber": 85
       },
       "abstract": "File contents selected by the caller are returned to the caller.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -538,7 +538,7 @@
       "impact": 2.5,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/controller/ExportController.java",
-        "lineNumber": 79
+        "lineNumber": 94
       },
       "abstract": "The subdir request parameter is concatenated into a filesystem path.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -556,7 +556,7 @@
       "impact": 2.5,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/controller/ExportController.java",
-        "lineNumber": 72
+        "lineNumber": 87
       },
       "abstract": "An unvalidated request parameter is written into a response header.",
       "scanDate": "2026-02-17T02:14:38Z",
