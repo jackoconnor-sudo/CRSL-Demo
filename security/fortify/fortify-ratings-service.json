@@ -258,7 +258,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "922B8440831015CB",
+      "issueInstanceId": "3529379CD5D8B414",
       "category": "Key Management: Hardcoded Encryption Key",
       "kingdom": "Security Features",
       "friority": "Critical",
@@ -268,7 +268,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/crypto/LegacyDigest.java",
-        "lineNumber": 21
+        "lineNumber": 26
       },
       "abstract": "The field encryption key is a string constant.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -348,7 +348,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "EFE52D17D5081283",
+      "issueInstanceId": "F313F555AD4F5BCC",
       "category": "Weak Cryptographic Hash",
       "kingdom": "Security Features",
       "friority": "High",
@@ -358,7 +358,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/crypto/LegacyDigest.java",
-        "lineNumber": 30
+        "lineNumber": 42
       },
       "abstract": "Passwords are hashed with MD5 and an unsalted single pass.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -366,7 +366,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "24EC72DD9899A817",
+      "issueInstanceId": "6D6B906704B95DD3",
       "category": "Weak Cryptographic Hash",
       "kingdom": "Security Features",
       "friority": "Medium",
@@ -376,7 +376,7 @@
       "impact": 2.5,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/crypto/LegacyDigest.java",
-        "lineNumber": 40
+        "lineNumber": 51
       },
       "abstract": "Values are fingerprinted with MD5.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -402,7 +402,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "773D25ED6B57FDF0",
+      "issueInstanceId": "25609BE5DF19456E",
       "category": "Weak Encryption",
       "kingdom": "Security Features",
       "friority": "High",
@@ -412,7 +412,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/crypto/LegacyDigest.java",
-        "lineNumber": 49
+        "lineNumber": 63
       },
       "abstract": "Field encryption uses DES in ECB mode.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -420,7 +420,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "6ECE3EB84C2BAE55",
+      "issueInstanceId": "F4B7BA44E57FA80B",
       "category": "Weak Encryption",
       "kingdom": "Security Features",
       "friority": "High",
@@ -430,7 +430,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/crypto/LegacyDigest.java",
-        "lineNumber": 59
+        "lineNumber": 83
       },
       "abstract": "Field decryption uses DES in ECB mode.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -438,7 +438,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "56AADEADA8E1648B",
+      "issueInstanceId": "A01FB1E0860D1957",
       "category": "Weak Encryption: Insecure Key Length",
       "kingdom": "Security Features",
       "friority": "Medium",
@@ -448,7 +448,7 @@
       "impact": 2.5,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/crypto/LegacyDigest.java",
-        "lineNumber": 73
+        "lineNumber": 106
       },
       "abstract": "A 56 bit DES key is derived from a string constant.",
       "scanDate": "2026-02-17T02:14:38Z",

@@ -106,7 +106,7 @@ FORTIFY_ISSUES = [
      "A service account password is compiled into the artifact."),
     (WAREHOUSE, "WAREHOUSE_API_TOKEN = ", 1, "Key Management: Hardcoded Encryption Key", 798, "Critical",
      "A live warehouse API token is compiled into the artifact."),
-    (DIGEST, "FIELD_KEY = ", 1, "Key Management: Hardcoded Encryption Key", 321, "Critical",
+    (DIGEST, "FIELD_KEY_ENV = ", 1, "Key Management: Hardcoded Encryption Key", 321, "Critical",
      "The field encryption key is a string constant."),
     (SESSION_CTRL, "OPS_CONSOLE_PASSWORD_HASH = ", 1, "Password Management: Hardcoded Password", 798, "High",
      "The ops console credential is compared against a constant digest."),
@@ -118,17 +118,17 @@ FORTIFY_ISSUES = [
      "The warehouse API token is baked into an image layer as an environment variable."),
 
     # Weak cryptography.
-    (DIGEST, "MessageDigest.getInstance(\"MD5\")", 1, "Weak Cryptographic Hash", 328, "High",
+    (DIGEST, "SecretKeyFactory.getInstance(\"PBKDF2WithHmacSHA256\")", 1, "Weak Cryptographic Hash", 328, "High",
      "Passwords are hashed with MD5 and an unsalted single pass."),
-    (DIGEST, "MessageDigest.getInstance(\"MD5\")", 2, "Weak Cryptographic Hash", 328, "Medium",
+    (DIGEST, "MessageDigest.getInstance(\"SHA-256\")", 1, "Weak Cryptographic Hash", 328, "Medium",
      "Values are fingerprinted with MD5."),
     (SESSION_CTRL, "LegacyDigest.hashPassword(password, user)", 1, "Weak Password Storage", 916, "High",
      "Authentication compares an MD5 digest of the submitted password."),
-    (DIGEST, "Cipher.getInstance(\"DES/ECB/PKCS5Padding\")", 1, "Weak Encryption", 327, "High",
+    (DIGEST, "Cipher.getInstance(\"AES/GCM/NoPadding\")", 1, "Weak Encryption", 327, "High",
      "Field encryption uses DES in ECB mode."),
-    (DIGEST, "Cipher.getInstance(\"DES/ECB/PKCS5Padding\")", 2, "Weak Encryption", 327, "High",
+    (DIGEST, "Cipher.getInstance(\"AES/GCM/NoPadding\")", 2, "Weak Encryption", 327, "High",
      "Field decryption uses DES in ECB mode."),
-    (DIGEST, "SecretKeyFactory.getInstance(\"DES\")", 1, "Weak Encryption: Insecure Key Length", 326, "Medium",
+    (DIGEST, "return new SecretKeySpec(key, \"AES\")", 1, "Weak Encryption: Insecure Key Length", 326, "Medium",
      "A 56 bit DES key is derived from a string constant."),
 
     # Command injection.
@@ -179,9 +179,9 @@ FORTIFY_ISSUES = [
 ]
 
 SONAR_ISSUES = [
-    (DIGEST, "SESSION_RANDOM = new Random()", 1, "java:S2245", "CRITICAL", "VULNERABILITY",
+    (DIGEST, "RANDOM = new SecureRandom()", 1, "java:S2245", "CRITICAL", "VULNERABILITY",
      "Make sure that using this pseudorandom number generator is safe here.", ["cwe", "owasp-a3"]),
-    (DIGEST, "Long.toHexString(SESSION_RANDOM.nextLong())", 1, "java:S2245", "CRITICAL", "VULNERABILITY",
+    (DIGEST, "return Hex.encodeHexString(id)", 1, "java:S2245", "CRITICAL", "VULNERABILITY",
      "Session identifiers are derived from java.util.Random.", ["cwe", "owasp-a3"]),
     (ERRORS, "body.put(\"trace\", trace.toString())", 1, "java:S1989", "MAJOR", "VULNERABILITY",
      "Do not return a stack trace in an API response.", ["cwe", "owasp-a3", "error-handling"]),
