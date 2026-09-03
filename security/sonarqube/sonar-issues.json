@@ -43,12 +43,12 @@
       "status": "OPEN"
     },
     {
-      "key": "0C1D6607693FB44C",
+      "key": "CD252525AD77A72B",
       "rule": "java:S1989",
       "severity": "MAJOR",
       "component": "northgate:ratings-service/src/main/java/com/northgate/ratings/config/ApiExceptionHandler.java",
       "project": "northgate",
-      "line": 33,
+      "line": 40,
       "message": "Do not return a stack trace in an API response.",
       "type": "VULNERABILITY",
       "effort": "30min",
@@ -61,12 +61,12 @@
       "status": "OPEN"
     },
     {
-      "key": "D4ABB4394AACA040",
+      "key": "DF687779A947A327",
       "rule": "java:S4507",
       "severity": "MINOR",
       "component": "northgate:ratings-service/src/main/java/com/northgate/ratings/config/ApiExceptionHandler.java",
       "project": "northgate",
-      "line": 32,
+      "line": 39,
       "message": "Make sure this debug feature is deactivated before delivering the code in production.",
       "type": "CODE_SMELL",
       "effort": "30min",
