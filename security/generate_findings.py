@@ -138,13 +138,13 @@ FORTIFY_ISSUES = [
      "The concatenated command is executed through /bin/sh -c."),
 
     # Path manipulation.
-    (EXPORT_CTRL, "File file = new File(exportDir + \"/\" + name)", 1, "Path Manipulation", 22, "High",
+    (EXPORT_CTRL, "Path file = resolveInsideExportDir(name)", 1, "Path Manipulation", 22, "High",
      "The name request parameter is concatenated into a filesystem path."),
-    (EXPORT_CTRL, "Files.readAllBytes(file.toPath())", 1, "Path Manipulation", 22, "High",
+    (EXPORT_CTRL, "Files.readAllBytes(file)", 1, "Path Manipulation", 22, "High",
      "File contents selected by the caller are returned to the caller."),
-    (EXPORT_CTRL, "File dir = new File(exportDir + \"/\" + subdir)", 1, "Path Manipulation", 22, "Medium",
+    (EXPORT_CTRL, "Path dir = resolveInsideExportDir(subdir)", 1, "Path Manipulation", 22, "Medium",
      "The subdir request parameter is concatenated into a filesystem path."),
-    (EXPORT_CTRL, "\"attachment; filename=\" + name", 1, "Header Manipulation", 113, "Medium",
+    (EXPORT_CTRL, "\"attachment; filename=", 1, "Header Manipulation", 113, "Medium",
      "An unvalidated request parameter is written into a response header."),
 
     # Deserialization.
