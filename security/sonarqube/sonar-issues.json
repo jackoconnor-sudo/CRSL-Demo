@@ -9,12 +9,12 @@
   "total": 7,
   "issues": [
     {
-      "key": "BDEC284477BD1DF2",
+      "key": "6A6C5DD959D93F05",
       "rule": "java:S2245",
       "severity": "CRITICAL",
       "component": "northgate:ratings-service/src/main/java/com/northgate/ratings/crypto/LegacyDigest.java",
       "project": "northgate",
-      "line": 23,
+      "line": 33,
       "message": "Make sure that using this pseudorandom number generator is safe here.",
       "type": "VULNERABILITY",
       "effort": "30min",
@@ -26,12 +26,12 @@
       "status": "OPEN"
     },
     {
-      "key": "689BFA54DBFDE90C",
+      "key": "E99DC3031782A002",
       "rule": "java:S2245",
       "severity": "CRITICAL",
       "component": "northgate:ratings-service/src/main/java/com/northgate/ratings/crypto/LegacyDigest.java",
       "project": "northgate",
-      "line": 68,
+      "line": 94,
       "message": "Session identifiers are derived from java.util.Random.",
       "type": "VULNERABILITY",
       "effort": "30min",
