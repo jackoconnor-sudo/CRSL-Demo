@@ -2,11 +2,14 @@ package com.northgate.ratings.feed;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -28,9 +31,7 @@ public class LegacyFeedParser {
 
     public List<Rating> parse(String xml) {
         try {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            factory.setNamespaceAware(true);
-            DocumentBuilder builder = factory.newDocumentBuilder();
+            DocumentBuilder builder = newDocumentBuilder(true);
             InputStream in = new ByteArrayInputStream(xml.getBytes("UTF-8"));
             Document document = builder.parse(in);
             return toRatings(document);
@@ -41,16 +42,32 @@ public class LegacyFeedParser {
 
     public String echoNormalised(String xml) {
         try {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            Document document = factory.newDocumentBuilder()
+            Document document = newDocumentBuilder(false)
                     .parse(new ByteArrayInputStream(xml.getBytes("UTF-8")));
-            Transformer transformer = TransformerFactory.newInstance().newTransformer();
-            java.io.StringWriter writer = new java.io.StringWriter();
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            transformerFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+            transformerFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
+            Transformer transformer = transformerFactory.newTransformer();
+            StringWriter writer = new StringWriter();
             transformer.transform(new DOMSource(document), new StreamResult(writer));
             return writer.toString();
         } catch (Exception e) {
             throw new IllegalArgumentException("feed could not be normalised: " + e.getMessage(), e);
         }
+    }
+
+    /** The feed never uses a DTD, so doctype declarations (and with them every entity vector) are rejected outright. */
+    private static DocumentBuilder newDocumentBuilder(boolean namespaceAware) throws ParserConfigurationException {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setNamespaceAware(namespaceAware);
+        factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+        factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        factory.setFeature("http://xml.org/sax/features/external-general-entities", false);
+        factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+        factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+        factory.setXIncludeAware(false);
+        factory.setExpandEntityReferences(false);
+        return factory.newDocumentBuilder();
     }
 
     private List<Rating> toRatings(Document document) {

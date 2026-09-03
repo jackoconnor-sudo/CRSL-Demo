@@ -168,7 +168,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "1A97F59BF386C900",
+      "issueInstanceId": "143FAAEB51270FDE",
       "category": "XML External Entity Injection",
       "kingdom": "Input Validation and Representation",
       "friority": "Critical",
@@ -178,7 +178,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/feed/LegacyFeedParser.java",
-        "lineNumber": 31
+        "lineNumber": 61
       },
       "abstract": "DocumentBuilderFactory is used without disallow-doctype-decl on request supplied XML.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -186,7 +186,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "9AC3475927D9BC47",
+      "issueInstanceId": "30C8A5B5D21F4222",
       "category": "XML External Entity Injection",
       "kingdom": "Input Validation and Representation",
       "friority": "Critical",
@@ -204,7 +204,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "14E6953A1BB1B981",
+      "issueInstanceId": "B5FB0A7EDAD2A68F",
       "category": "XML External Entity Injection",
       "kingdom": "Input Validation and Representation",
       "friority": "High",

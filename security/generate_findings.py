@@ -94,11 +94,11 @@ FORTIFY_ISSUES = [
      "A SELECT statement is assembled by concatenation in coverage."),
 
     # XXE.
-    (FEED, "DocumentBuilderFactory.newInstance();", 1, "XML External Entity Injection", 611, "Critical",
+    (FEED, "DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();", 1, "XML External Entity Injection", 611, "Critical",
      "DocumentBuilderFactory is used without disallow-doctype-decl on request supplied XML."),
-    (FEED, "Document document = factory.newDocumentBuilder()", 1, "XML External Entity Injection", 611, "Critical",
+    (FEED, "Document document = newDocumentBuilder(false)", 1, "XML External Entity Injection", 611, "Critical",
      "The normalise path parses request supplied XML with an unhardened factory."),
-    (FEED, "TransformerFactory.newInstance().newTransformer()", 1, "XML External Entity Injection", 611, "High",
+    (FEED, "TransformerFactory transformerFactory = TransformerFactory.newInstance()", 1, "XML External Entity Injection", 611, "High",
      "TransformerFactory is created without ACCESS_EXTERNAL_DTD restrictions."),
 
     # Hardcoded credentials.
