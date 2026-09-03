@@ -164,7 +164,7 @@ FORTIFY_ISSUES = [
     # Log forging.
     (ADMIN_FILTER, "LOG.info(\"admin check user=\"", 1, "Log Forging", 117, "Medium",
      "The X-Forwarded-User header is written to the log without neutralising newlines."),
-    (RATINGS_CTRL, "LOG.info(\"rating lookup issuer=\"", 1, "Log Forging", 117, "Medium",
+    (RATINGS_CTRL, "LOG.info(\"rating lookup issuer={}", 1, "Log Forging", 117, "Medium",
      "The issuerId and requestedBy values are written to the log unneutralised."),
     (WAREHOUSE, "LOG.warn(\"warehouse lookup failed for \"", 1, "Log Forging", 117, "Low",
      "The issuerId value is written to the log unneutralised."),
