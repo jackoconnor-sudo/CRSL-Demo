@@ -20,6 +20,8 @@ spring:
       path: /h2-console
 
 northgate:
+  session:
+    secret: ${NORTHGATE_SESSION_SECRET:}
   export:
     dir: /var/northgate/exports
   warehouse:

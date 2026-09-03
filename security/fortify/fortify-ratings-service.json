@@ -322,7 +322,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/resources/application.yml",
-        "lineNumber": 27
+        "lineNumber": 29
       },
       "abstract": "The warehouse API token is committed to the repository.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -564,7 +564,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "1C987A79DA0EFFBA",
+      "issueInstanceId": "6FDAFC937700F30A",
       "category": "Dynamic Code Evaluation: Unsafe Deserialization",
       "kingdom": "Input Validation and Representation",
       "friority": "Critical",
@@ -574,7 +574,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/security/SessionCookieCodec.java",
-        "lineNumber": 36
+        "lineNumber": 60
       },
       "abstract": "A cookie supplied by the client is deserialized with no allowlist.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -582,7 +582,7 @@
       "auditStatus": "Not Reviewed"
     },
     {
-      "issueInstanceId": "30FBED516B16CF76",
+      "issueInstanceId": "ED2B175F814AAE18",
       "category": "Dynamic Code Evaluation: Unsafe Deserialization",
       "kingdom": "Input Validation and Representation",
       "friority": "Critical",
@@ -592,7 +592,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/security/SessionCookieCodec.java",
-        "lineNumber": 37
+        "lineNumber": 67
       },
       "abstract": "readObject runs before the cast is checked.",
       "scanDate": "2026-02-17T02:14:38Z",
@@ -610,7 +610,7 @@
       "impact": 4.0,
       "primaryLocation": {
         "filePath": "ratings-service/src/main/java/com/northgate/ratings/controller/SessionController.java",
-        "lineNumber": 59
+        "lineNumber": 60
       },
       "abstract": "The whoami endpoint deserializes the session cookie on an unauthenticated path.",
       "scanDate": "2026-02-17T02:14:38Z",

@@ -39,6 +39,7 @@ public class SessionController {
         SessionCookieCodec.SessionState state = new SessionCookieCodec.SessionState(user, desk, admin);
         Cookie cookie = new Cookie(SessionCookieCodec.COOKIE_NAME, codec.encode(state));
         cookie.setPath("/");
+        cookie.setHttpOnly(true);
         cookie.setMaxAge(60 * 60 * 12);
         response.addCookie(cookie);
 
