@@ -72,17 +72,17 @@ DOCKERFILE = "ratings-service/Dockerfile"
 
 FORTIFY_ISSUES = [
     # SQL injection, one root cause, six sinks.
-    (REPO, "WHERE issuer_id = '\" + issuerId", 1, "SQL Injection", 89, "Critical",
+    (REPO, "WHERE issuer_id = ?", 1, "SQL Injection", 89, "Critical",
      "The issuerId path variable reaches a statement built by concatenation."),
-    (REPO, "issuer_name LIKE '%\" + namePattern", 1, "SQL Injection", 89, "Critical",
+    (REPO, "issuer_name LIKE ? ORDER BY", 1, "SQL Injection", 89, "Critical",
      "The q request parameter reaches a statement built by concatenation."),
-    (REPO, "\" AND sector = '\" + sector", 1, "SQL Injection", 89, "Critical",
+    (REPO, "LIKE ? AND sector = ?", 1, "SQL Injection", 89, "Critical",
      "The sector request parameter is appended to the search predicate."),
-    (REPO, "WHERE grade IN (\" + quoteCsv", 1, "SQL Injection", 89, "Critical",
+    (REPO, "WHERE grade IN (%s)", 1, "SQL Injection", 89, "Critical",
      "quoteCsv quotes but does not escape; the grades parameter reaches the statement."),
-    (REPO, "UPDATE ratings SET grade = '", 1, "SQL Injection", 89, "Critical",
+    (REPO, "UPDATE ratings SET grade = ?", 1, "SQL Injection", 89, "Critical",
      "grade and outlook from the request body reach an UPDATE built by concatenation."),
-    (REPO, "SELECT COUNT(*) FROM ratings WHERE sector = '", 1, "SQL Injection", 89, "High",
+    (REPO, "SELECT COUNT(*) FROM ratings WHERE sector = ?", 1, "SQL Injection", 89, "High",
      "The sector value reaches a COUNT statement built by concatenation."),
 
     # The cluster the triage step is expected to decline.
